@@ -30,10 +30,10 @@
 			<div class="w3_footer_grids">
 				<div class="col-md-3 w3_footer_grid">
 					<h3>Contact</h3>
-					<p>Duis aute irure dolor in reprehenderit in voluptate velit esse.</p>
+					<p>Thanks for visited our store. Contact us with .</p>
 					<ul class="address">
 						<li><i class="glyphicon glyphicon-map-marker" aria-hidden="true"></i>Đông Hòa, Dĩ An, <span>HCM City.</span></li>
-						<li><i class="glyphicon glyphicon-envelope" aria-hidden="true"></i><a href="mailto:17130200@st.hcmuaf.edu.com">17130200@st.hcmuaf.edu.com</a></li>
+						<li><i class="glyphicon glyphicon-envelope" aria-hidden="true"></i><a href="mailto:17130200@st.hcmuaf.edu.com">17130200@st.hcmuaf</a></li>
 						<li><i class="glyphicon glyphicon-earphone" aria-hidden="true"></i>0987 654 321</li>
 					</ul>
 				</div>
@@ -83,7 +83,7 @@
 				</div>
 			</div>
 			<div class="container">
-				<p>&copy; 2019 Electronic Store. All rights reserved | Design by <a href="https://www.facebook.com/tai.duong.313">Web2T</a></p>
+				<p>&copy; 2019 Store Web2T. All rights reserved | Design by <a href="https://www.facebook.com/tai.duong.313">Web2T</a></p>
 			</div>
 		</div>
 	</div>
