@@ -44,7 +44,8 @@
 											<div class="register">
 												<form action="#" method="post">			
 													<input autofocus placeholder="User name"  name="Name" type="text" required="">
-													<input placeholder="Email Address" name="Email" type="email" required="">	
+													<input placeholder="Email Address" name="Email" type="email" required="">
+													<input placeholder="Address" name="Address" type="text" >	
 													<input placeholder="Password" name="Password" type="password" required="">	
 													<input placeholder="Confirm Password" name="Password" type="password" required="">
 													<div class="sign-up">
