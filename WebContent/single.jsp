@@ -1,54 +1,14 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<title>Electronic Store a Ecommerce Online Shopping Category Bootstrap Responsive Website Template | Single Page :: w3layouts</title>
-<!-- for-mobile-apps -->
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="keywords" content="Electronic Store Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, 
-	SmartPhone Compatible web template, free web designs for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
-<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
-	function hideURLbar(){ window.scrollTo(0,1); } </script>
-<!-- //for-mobile-apps -->
-<!-- Custom Theme files -->
-<link href="css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
-<link href="css/style.css" rel="stylesheet" type="text/css" media="all" /> 
-<link href="css/fasthover.css" rel="stylesheet" type="text/css" media="all" />
-<!-- //Custom Theme files -->
-<!-- font-awesome icons -->
-<link href="css/font-awesome.css" rel="stylesheet"> 
-<!-- //font-awesome icons -->
-<!-- js -->
-<script src="js/jquery.min.js"></script> 
-<!-- //js -->  
-<!-- web fonts --> 
-<link href='//fonts.googleapis.com/css?family=Glegoo:400,700' rel='stylesheet' type='text/css'>
-<link href='//fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic' rel='stylesheet' type='text/css'>
-<!-- //web fonts --> 
-<!-- for bootstrap working -->
-<script type="text/javascript" src="js/bootstrap-3.1.1.min.js"></script>
-<!-- //for bootstrap working -->
-<!-- start-smooth-scrolling -->
-<script type="text/javascript">
-	jQuery(document).ready(function($) {
-		$(".scroll").click(function(event){		
-			event.preventDefault();
-			$('html,body').animate({scrollTop:$(this.hash).offset().top},1000);
-		});
-	});
-</script>
-<!-- //end-smooth-scrolling --> 
-</head> 
-<body> 
+	<!-- header -->
+	<jsp:include page="header/header.jsp"></jsp:include>
+	<!-- /header -->
+
 	<!-- header login -->
 	<jsp:include page="header/headerLogin.jsp"></jsp:include>
 	<!-- header login -->
 	
-	<!-- header and navigation -->
-	<jsp:include page="header/header.jsp"></jsp:include>
-	<!-- header and navigation -->
+	<!-- header navigation -->
+	<jsp:include page="header/headerNavigation.jsp"></jsp:include>
+	<!-- header navigation -->
 	
 	<!-- banner -->
 	<div class="banner banner10">
@@ -73,14 +33,14 @@
 			<div class="col-md-4 single-left">
 				<div class="flexslider">
 					<ul class="slides">
-						<li data-thumb="images/a.jpg">
-							<div class="thumb-image"> <img src="images/a.jpg" data-imagezoom="true" class="img-responsive" alt=""> </div>
+						<li data-thumb="images/22.jpg">
+							<div class="thumb-image"> <img src="images/22.jpg" data-imagezoom="true" class="img-responsive" alt=""> </div>
 						</li>
-						<li data-thumb="images/b.jpg">
-							 <div class="thumb-image"> <img src="images/b.jpg" data-imagezoom="true" class="img-responsive" alt=""> </div>
+						<li data-thumb="images/23.jpg">
+							 <div class="thumb-image"> <img src="images/23.jpg" data-imagezoom="true" class="img-responsive" alt=""> </div>
 						</li>
-						<li data-thumb="images/c.jpg">
-						   <div class="thumb-image"> <img src="images/c.jpg" data-imagezoom="true" class="img-responsive" alt=""> </div>
+						<li data-thumb="images/24.jpg">
+						   <div class="thumb-image"> <img src="images/24.jpg" data-imagezoom="true" class="img-responsive" alt=""> </div>
 						</li> 
 					</ul>
 				</div>
@@ -102,7 +62,7 @@
 				<!-- //zooming-effect -->
 			</div>
 			<div class="col-md-8 single-right">
-				<h3>The Best 3GB RAM Mobile Phone</h3>
+				<h3>LAPTOP</h3>
 				<div class="rating1">
 					<span class="starRating">
 						<input id="rating5" type="radio" name="rating" value="5">
@@ -165,17 +125,17 @@
 					<h5>RAM :</h5>
 					<div class="colr ert">
 						<div class="check">
-							<label class="checkbox"><input type="checkbox" name="checkbox" checked=""><i> </i>3 GB</label>
+							<label class="checkbox"><input type="checkbox" name="checkbox" checked=""><i> </i>4 GB</label>
 						</div>
 					</div>
 					<div class="colr">
 						<div class="check">
-							<label class="checkbox"><input type="checkbox" name="checkbox"><i> </i>2 GB</label>
+							<label class="checkbox"><input type="checkbox" name="checkbox"><i> </i>8 GB</label>
 						</div>
 					</div>
 					<div class="colr">
 						<div class="check">
-							<label class="checkbox"><input type="checkbox" name="checkbox"><i> </i>1 GB</label>
+							<label class="checkbox"><input type="checkbox" name="checkbox"><i> </i>16 GB</label>
 						</div>
 					</div>
 					<div class="clearfix"> </div>
@@ -203,7 +163,7 @@
 						<li class="resp-tab-item" aria-controls="tab_item-1" role="tab"><span>Reviews</span></li>
 					</ul>		
 					<div class="tab-1 resp-tab-content additional_info_grid" aria-labelledby="tab_item-0">
-						<h3>The Best 3GB RAM Mobile Phone</h3>
+						<h3>LAPTOP</h3>
 						<p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore 
 							eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident.
 							Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut 
@@ -219,12 +179,12 @@
 						<h4>(2) Reviews</h4>
 						<div class="additional_info_sub_grids">
 							<div class="col-xs-2 additional_info_sub_grid_left">
-								<img src="images/t1.png" alt=" " class="img-responsive" />
+								<img src="" alt=" " class="img-responsive" />
 							</div>
 							<div class="col-xs-10 additional_info_sub_grid_right">
 								<div class="additional_info_sub_grid_rightl">
-									<a href="single.jsp">Laura</a>
-									<h5>Oct 06, 2016.</h5>
+									<a href="single.jsp">Duong Tai</a>
+									<h5>Oct 06, 2019.</h5>
 									<p>Quis autem vel eum iure reprehenderit qui in ea voluptate 
 										velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat 
 										quo voluptas nulla pariatur.</p>
@@ -255,12 +215,12 @@
 						</div>
 						<div class="additional_info_sub_grids">
 							<div class="col-xs-2 additional_info_sub_grid_left">
-								<img src="images/t2.png" alt=" " class="img-responsive" />
+								<img src="" alt=" " class="img-responsive" />
 							</div>
 							<div class="col-xs-10 additional_info_sub_grid_right">
 								<div class="additional_info_sub_grid_rightl">
-									<a href="single.jsp">Michael</a>
-									<h5>Oct 04, 2016.</h5>
+									<a href="single.jsp">Hong Tien</a>
+									<h5>Oct 04, 2019.</h5>
 									<p>Quis autem vel eum iure reprehenderit qui in ea voluptate 
 										velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat 
 										quo voluptas nulla pariatur.</p>
@@ -728,23 +688,3 @@
 	<!-- send mail and footer -->
 	<jsp:include page="footer/footer.jsp"></jsp:include>
 	<!-- send mail and footer --> 
-	 
-	<!-- cart-js -->
-	<script src="js/minicart.js"></script>
-	<script>
-        w3ls.render();
-
-        w3ls.cart.on('w3sb_checkout', function (evt) {
-        	var items, len, i;
-
-        	if (this.subtotal() > 0) {
-        		items = this.items();
-
-        		for (i = 0, len = items.length; i < len; i++) { 
-        		}
-        	}
-        });
-    </script>  
-	<!-- //cart-js --> 
-</body>
-</html>

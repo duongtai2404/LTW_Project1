@@ -1,21 +1,13 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <!-- header modal -->
-	<div class="modal fade" id="myModal88" tabindex="-1" role="dialog" aria-labelledby="myModal88"
-		aria-hidden="true">
+	<div class="modal fade" id="myModal88" tabindex="-1" role="dialog" aria-labelledby="myModal88" aria-hidden="true">
 		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
 				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-						&times;</button>
-					<h4 class="modal-title" id="myModalLabel">Don't Wait, Login now!</h4>
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="myModalLabel"><fmt:message key="LoginNow" /></h4>
 				</div>
 				<div class="modal-body modal-body-sub">
 					<div class="row">
@@ -23,38 +15,62 @@
 							<div class="sap_tabs">	
 								<div id="horizontalTab" style="display: block; width: 100%; margin: 0px;">
 									<ul>
-										<li class="resp-tab-item" aria-controls="tab_item-0"><span>Sign in</span></li>
-										<li class="resp-tab-item" aria-controls="tab_item-1"><span>Sign up</span></li>
-									</ul>		
+										<li class="resp-tab-item" aria-controls="tab_item-0"><span><fmt:message key="SignIn"></fmt:message></span></li>		
+										<li class="resp-tab-item " aria-controls="tab_item-1"><span><fmt:message key="SignUp"></fmt:message></span></li>
+									</ul>
+									
+									<!-- Start signin	-->		
 									<div class="tab-1 resp-tab-content" aria-labelledby="tab_item-0">
 										<div class="facts">
 											<div class="register">
-												<form action="#" method="post">			
-													<input name="Name" autofocus placeholder="User name" type="text" required="" >						
-													<input name="Password" placeholder="Password" type="password" required="">										
+												<form action="SignIn" method="post" >			
+													<input name="Name" autofocus placeholder="<fmt:message key="UserName" />" type="text" required="" >						
+													<input name="Password" placeholder="<fmt:message key="Password" />" type="password" required="">										
+													<c:if test="${!empty errorSignin}">
+														<h5 style="color:red; margin-top:20px"><fmt:message key="${errorSignin }" /></h5>
+													</c:if>
 													<div class="sign-up">
-														<input type="submit" value="Sign in"/>
+														<input type="submit" value="<fmt:message key="SignIn" />" />
 													</div>
 												</form>
 											</div>
+											
 										</div> 
-									</div>	 
+									</div>
+									<!-- End signin	-->
+									
+									<!--start signup-->
 									<div class="tab-2 resp-tab-content" aria-labelledby="tab_item-1">
 										<div class="facts">
 											<div class="register">
-												<form action="#" method="post">			
-													<input autofocus placeholder="User name"  name="Name" type="text" required="">
-													<input placeholder="Email Address" name="Email" type="email" required="">
-													<input placeholder="Address" name="Address" type="text" >	
-													<input placeholder="Password" name="Password" type="password" required="">	
-													<input placeholder="Confirm Password" name="Password" type="password" required="">
+												<form action="SignUp" method="post">
+													<c:choose>
+														<c:when test="${!empty errorSignup }">
+															<input autofocus placeholder="${wrongUser.userName }"  name="Name" type="text" required="">
+															<input placeholder="${wrongUser.emailAddress }" name="Email" type="email" required="">
+															<input placeholder="${wrongUser.address }" name="Address" type="text" >	
+															<input placeholder="${wrongUser.phone }" name="Phone" type="number" >	
+														</c:when>
+														<c:otherwise>
+															<input autofocus placeholder=<fmt:message key="UserName" />  name="Name" type="text" required="">
+															<input placeholder="<fmt:message key="EmailAddress" />" name="Email" type="email" required="">
+															<input placeholder="<fmt:message key="Address" />" name="Address" type="text" >	
+															<input placeholder="<fmt:message key="Phone" />" name="Phone" type="number" >
+														</c:otherwise>
+													</c:choose>		
+													<input placeholder="<fmt:message key="Password" />" name="Password" type="password" required="">	
+													<input placeholder="<fmt:message key="ConfirmPassword" />" name="ConfirmPassword" type="password" required="">
+													<c:if test="${!empty errorSignup}">
+														<h5 style="color:red; margin-top:20px"><fmt:message key="${errorSignup }" /></h5>												
+													</c:if>
 													<div class="sign-up">
-														<input type="submit" value="Create Account"/>
+														<input type="submit" value="<fmt:message key="CreateAccount" />" />
 													</div>
 												</form>
 											</div>
 										</div>
-									</div> 			        					            	      
+									</div>
+									<!--end signup--> 			        					            	      
 								</div>	
 							</div>
 							<script src="js/easyResponsiveTabs.js" type="text/javascript"></script>
@@ -72,7 +88,7 @@
 						<div class="col-md-4 modal_body_right modal_body_right1">
 							<div class="row text-center sign-with">
 								<div class="col-md-12">
-									<h3 class="other-nw" >Sign in with</h3>
+									<h3 class="other-nw" ><fmt:message key="SignInWith" /> </h3>
 								</div>
 								<div class="col-md-12">
 									<ul class="social">
@@ -90,5 +106,4 @@
 		</div>
 	</div>
 	<!-- header modal -->
-</body>
-</html>
+
