@@ -12,7 +12,7 @@
 
 	<!-- header login -->
 	<jsp:include page="header/headerLogin.jsp"></jsp:include>
-	<c:if test="${empty user}">
+	<c:if test="${!empty showLogin}">
 		<script>
 			$('#myModal88').modal('show');
 		</script>
@@ -95,14 +95,14 @@
 												</ul>
 											</div>
 										</div>
-										<h5><a href="single.jsp">${computerLenovo.nameComputer}</a></h5>
+										<c:url var="url" value="/productDetails?idComputer=${computerLenovo.idComputer}"></c:url>
+										<h5><a href="${url}">${computerLenovo.nameComputer}</a></h5>
 										<div class="simpleCart_shelfItem">
 											<p><span>$${computerLenovo.oldPrice}</span> <i class="item_price">$${computerLenovo.newPrice}</i></p>
-											<form action="#" method="post">
-												<input type="hidden" name="cmd" value="_cart" />
-												<input type="hidden" name="add" value="1" /> 
-												<input type="hidden" name="w3ls_item" value="${computerLenovo.nameComputer}" /> 
-												<input type="hidden" name="amount" value="${computerLenovo.newPrice}" />   
+											<c:url var="addProduct" value="/AddProduct"></c:url>
+											<form action="${addProduct }" method="post">
+												<input type="hidden" name="quantity" value="1" /> 
+												<input type="hidden" name="idComputer" value="${computerLenovo.idComputer}" /> 
 												<button type="submit" class="w3ls-cart"><fmt:message key="AddToCart" /></button>
 											</form>  
 										</div>
@@ -132,14 +132,13 @@
 												</ul>
 											</div>
 										</div>
-										<h5><a href="single.jsp">${computerHP.nameComputer }</a></h5>
+										<c:url var="url" value="/productDetails?idComputer=${computerHP.idComputer}"></c:url>
+										<h5><a href="${url}">${computerHP.nameComputer }</a></h5>
 										<div class="simpleCart_shelfItem">
 											<p><span>$${computerHP.oldPrice }</span> <i class="item_price">$${computerHP.newPrice }</i></p>
-											<form action="#" method="post">
-												<input type="hidden" name="cmd" value="_cart" />
-												<input type="hidden" name="add" value="1" /> 
-												<input type="hidden" name="w3ls_item" value="${computerHP.nameComputer }" /> 
-												<input type="hidden" name="amount" value="${computerHP.newPrice }" />   
+											<form action="${addProduct }" method="post">
+												<input type="hidden" name="quantity" value="1" /> 
+												<input type="hidden" name="idComputer" value="${computerHP.idComputer }" />  
 												<button type="submit" class="w3ls-cart"><fmt:message key="AddToCart"/></button>
 											</form>
 										</div>
@@ -169,14 +168,13 @@
 												</ul>
 											</div>
 										</div>
-										<h5><a href="single.jsp">${computerDell.nameComputer }</a></h5>
+										<c:url var="url" value="/productDetails?idComputer=${computerDell.idComputer}"></c:url>
+										<h5><a href="${url }">${computerDell.nameComputer }</a></h5>
 										<div class="simpleCart_shelfItem">
 											<p><span>$${computerDell.oldPrice }</span> <i class="item_price">$${computerDell.newPrice }</i></p>
-											<form action="#" method="post">
-												<input type="hidden" name="cmd" value="_cart" />
-												<input type="hidden" name="add" value="1" /> 
-												<input type="hidden" name="w3ls_item" value="${computerDell.nameComputer }" /> 
-												<input type="hidden" name="amount" value="${computerDell.newPrice }" />   
+											<form action="${addProduct }" method="post">
+												<input type="hidden" name="quantity" value="1" /> 
+												<input type="hidden" name="idComputer" value="${computerDell.idComputer }" />  
 												<button type="submit" class="w3ls-cart"><fmt:message key="AddToCart"/></button>
 											</form>
 										</div>
@@ -206,14 +204,13 @@
 												</ul>
 											</div>
 										</div>
-										<h5><a href="single.jsp">${computerAcer.nameComputer }</a></h5>
+										<c:url var="url" value="/productDetails?idComputer=${computerAcer.idComputer}"></c:url>
+										<h5><a href="${url}">${computerAcer.nameComputer }</a></h5>
 										<div class="simpleCart_shelfItem">
 											<p><span>$${computerAcer.oldPrice }</span> <i class="item_price">$${computerAcer.newPrice }</i></p>
-											<form action="#" method="post">
-												<input type="hidden" name="cmd" value="_cart" />
-												<input type="hidden" name="add" value="1" /> 
-												<input type="hidden" name="w3ls_item" value="${computerAcer.nameComputer }" /> 
-												<input type="hidden" name="amount" value="${computerAcer.newPrice }" />   
+											<form action="${addProduct }" method="post">
+												<input type="hidden" name="quantity" value="1" /> 
+												<input type="hidden" name="idComputer" value="${computerAcer.idComputer }" />  
 												<button type="submit" class="w3ls-cart"><fmt:message key="AddToCart"/></button>
 											</form>
 										</div>
@@ -243,14 +240,13 @@
 												</ul>
 											</div>
 										</div>
-										<h5><a href="single.jsp">${computerAsus.nameComputer }</a></h5>
+										<c:url var="url" value="/productDetails?idComputer=${computerAcer.idComputer}"></c:url>
+										<h5><a href="${url}">${computerAsus.nameComputer }</a></h5>
 										<div class="simpleCart_shelfItem">
 											<p><span>$${computerAsus.oldPrice }</span> <i class="item_price">$${computerAsus.newPrice }</i></p>
-											<form action="#" method="post">
-												<input type="hidden" name="cmd" value="_cart" />
-												<input type="hidden" name="add" value="1" /> 
-												<input type="hidden" name="w3ls_item" value="${computerAsus.nameComputer }" /> 
-												<input type="hidden" name="amount" value="${computerAsus.newPrice }" />   
+											<form action="${addProduct }" method="post">
+												<input type="hidden" name="quantity" value="1" /> 
+												<input type="hidden" name="idComputer" value="${computerAsus.idComputer }" />  
 												<button type="submit" class="w3ls-cart"><fmt:message key="AddToCart"/></button>
 											</form>
 										</div>
@@ -297,11 +293,9 @@
 								</div>
 								<div class="modal_body_right_cart simpleCart_shelfItem">
 									<p><span>$${computerLenovo.oldPrice}</span> <i class="item_price">$${computerLenovo.newPrice }</i></p>
-									<form action="#" method="post">
-										<input type="hidden" name="cmd" value="_cart">
-										<input type="hidden" name="add" value="1"> 
-										<input type="hidden" name="w3ls_item" value="${computerLenovo.nameComputer}"> 
-										<input type="hidden" name="amount" value="${computerLenovo.newPrice}">   
+									<form action="${addProduct }" method="post">
+										<input type="hidden" name="quantity" value="1"> 
+										<input type="hidden" name="idComputer" value="${computerLenovo.idComputer}">   
 										<button type="submit" class="w3ls-cart"><fmt:message key="AddToCart"/></button>
 									</form>
 								</div>
@@ -341,11 +335,9 @@
 								</div>
 								<div class="modal_body_right_cart simpleCart_shelfItem">
 									<p><span>$${computerHP.oldPrice}</span> <i class="item_price">$${computerHP.newPrice }</i></p>
-									<form action="#" method="post">
-										<input type="hidden" name="cmd" value="_cart">
-										<input type="hidden" name="add" value="1"> 
-										<input type="hidden" name="w3ls_item" value="${computerHP.nameComputer}"> 
-										<input type="hidden" name="amount" value="${computerHP.newPrice}">   
+									<form action="${addProduct }" method="post">
+										<input type="hidden" name="quantity" value="1"> 
+										<input type="hidden" name="idComputer" value="${computerHP.idComputer}">  
 										<button type="submit" class="w3ls-cart"><fmt:message key="AddToCart"/></button>
 									</form>
 								</div>
@@ -385,11 +377,9 @@
 								</div>
 								<div class="modal_body_right_cart simpleCart_shelfItem">
 									<p><span>$${computerDell.oldPrice}</span> <i class="item_price">$${computerDell.newPrice }</i></p>
-									<form action="#" method="post">
-										<input type="hidden" name="cmd" value="_cart">
-										<input type="hidden" name="add" value="1"> 
-										<input type="hidden" name="w3ls_item" value="${computerDell.nameComputer}"> 
-										<input type="hidden" name="amount" value="${computerDell.newPrice}">   
+									<form action="${addProduct }" method="post">
+										<input type="hidden" name="quantity" value="1"> 
+										<input type="hidden" name="idComputer" value="${computerDell.idComputer}">  
 										<button type="submit" class="w3ls-cart"><fmt:message key="AddToCart"/></button>
 									</form>
 								</div>
@@ -429,11 +419,9 @@
 								</div>
 								<div class="modal_body_right_cart simpleCart_shelfItem">
 									<p><span>$${computerAcer.oldPrice}</span> <i class="item_price">$${computerAcer.newPrice }</i></p>
-									<form action="#" method="post">
-										<input type="hidden" name="cmd" value="_cart">
-										<input type="hidden" name="add" value="1"> 
-										<input type="hidden" name="w3ls_item" value="${computerAcer.nameComputer}"> 
-										<input type="hidden" name="amount" value="${computerAcer.newPrice}">   
+									<form action="${addProduct }" method="post">
+										<input type="hidden" name="quantity" value="1"> 
+										<input type="hidden" name="idComputer" value="${computerAcer.idComputer}">   
 										<button type="submit" class="w3ls-cart"><fmt:message key="AddToCart"/></button>
 									</form>
 								</div>
@@ -473,11 +461,9 @@
 								</div>
 								<div class="modal_body_right_cart simpleCart_shelfItem">
 									<p><span>$${computerAsus.oldPrice}</span> <i class="item_price">$${computerAsus.newPrice }</i></p>
-									<form action="#" method="post">
-										<input type="hidden" name="cmd" value="_cart">
-										<input type="hidden" name="add" value="1"> 
-										<input type="hidden" name="w3ls_item" value="${computerAsus.nameComputer}"> 
-										<input type="hidden" name="amount" value="${computerAsus.newPrice}">   
+									<form action="${addProduct }" method="post">
+										<input type="hidden" name="quantity" value="1"> 
+										<input type="hidden" name="idComputer" value="${computerAsus.idComputer}">  
 										<button type="submit" class="w3ls-cart"><fmt:message key="AddToCart"/></button>
 									</form>
 								</div>
@@ -519,11 +505,9 @@
 								</div>
 								<div class="modal_body_right_cart simpleCart_shelfItem">
 									<p><span>$${computer.oldPrice}</span> <i class="item_price">$${computer.newPrice }</i></p>
-									<form action="#" method="post">
-										<input type="hidden" name="cmd" value="_cart">
-										<input type="hidden" name="add" value="1"> 
-										<input type="hidden" name="w3ls_item" value="${computer.nameComputer}"> 
-										<input type="hidden" name="amount" value="${computer.newPrice}">   
+									<form action="${addProduct }" method="post">
+										<input type="hidden" name="quantity" value="1"> 
+										<input type="hidden" name="idComputer" value="${computer.idComputer}">  
 										<button type="submit" class="w3ls-cart"><fmt:message key="AddToCart"/></button>
 									</form>
 								</div>
@@ -650,14 +634,13 @@
 									</ul>
 								</div>
 							</div>
-							<h5><a href="single.jsp">${computer.nameComputer }</a></h5>
+							<c:url var="url" value="/productDetails?idComputer=${computer.idComputer}"></c:url>
+							<h5><a href="${url}">${computer.nameComputer }</a></h5>
 							<div class="simpleCart_shelfItem">
 								<p><span>$${computer.oldPrice }</span> <i class="item_price">$${computer.newPrice }</i></p>
-								<form action="#" method="post">
-									<input type="hidden" name="cmd" value="_cart">
-									<input type="hidden" name="add" value="1"> 
-									<input type="hidden" name="w3ls_item" value="${computer.nameComputer }"> 
-									<input type="hidden" name="amount" value="${computer.newPrice}">   
+								<form action="${addProduct }" method="post">
+										<input type="hidden" name="quantity" value="1"> 
+										<input type="hidden" name="idComputer" value="${computer.idComputer}">  
 									<button type="submit" class="w3ls-cart"><fmt:message key="AddToCart"/></button>
 								</form>
 							</div>

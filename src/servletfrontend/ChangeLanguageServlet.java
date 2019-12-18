@@ -9,30 +9,31 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import model.ShoppingCart;
+import org.apache.tomcat.jni.Local;
 
-@WebServlet("/LogOut")
-public class LogOutServlet extends HttpServlet {
+
+@WebServlet("/ChangeLanguage")
+public class ChangeLanguageServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
 
-    public LogOutServlet() {
+    public ChangeLanguageServlet() {
         super();
+        // TODO Auto-generated constructor stub
     }
 
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		ShoppingCart shoppingCart = new ShoppingCart();
-		getServletContext().setAttribute("shoppingCart", shoppingCart);
-		session.invalidate();
+		String language= request.getParameter("language");
+		session.setAttribute("language", language);
+		String referer = request.getHeader("Referer");
 		
-		getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
+		response.sendRedirect(referer);
+		
 	}
 
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
 	}
 
 }

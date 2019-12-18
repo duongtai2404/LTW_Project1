@@ -34,6 +34,11 @@ public class SecurityFilter implements Filter {
 		//lấy servlet path
         String servletPath = request.getServletPath();
 		User loginedUser = (User)session.getAttribute("user");
+
+		String showMiniCart = (String)request.getAttribute("showMiniCart");
+		if(showMiniCart !=null){
+			request.setAttribute("showMiniCart", showMiniCart);
+		}
 		
 		if(servletPath.equalsIgnoreCase("/SignIn")){
 			chain.doFilter(request, response);
@@ -48,6 +53,7 @@ public class SecurityFilter implements Filter {
             // Redirect (chuyển hướng) tới trang đăng nhập.
             if (loginedUser == null) {
                 session.setAttribute("redirectUri", redirectUri);
+                request.setAttribute("showLogin", "show");
                 // Lưu trữ trang hiện tại để redirect đến sau khi đăng nhập thành công.
                 RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/index.jsp");
                 dispatcher.forward(request,response);

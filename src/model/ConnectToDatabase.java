@@ -51,8 +51,7 @@ public class ConnectToDatabase {
 		ResultSet rs = stmt.executeQuery();
 		return rs;
 	}
-	
-	
+
 	//test connect to database
 	public static void main(String[] args) throws Exception {
 		ConnectToDatabase connetToDatabase = new ConnectToDatabase();

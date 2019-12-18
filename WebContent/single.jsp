@@ -1,3 +1,10 @@
+
+<%@page import="model.Computer"%>
+<%@page import="java.util.List"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<jsp:useBean id="computerDao" class="dao.ComputerDao" scope="session"></jsp:useBean>
+<jsp:useBean id="computer" class="model.Computer" scope="request"></jsp:useBean>
 	<!-- header -->
 	<jsp:include page="header/header.jsp"></jsp:include>
 	<!-- /header -->
@@ -13,7 +20,7 @@
 	<!-- banner -->
 	<div class="banner banner10">
 		<div class="container">
-			<h2>Single Page</h2>
+			<h2><fmt:message key="ProductDetails"/></h2>
 		</div>
 	</div>
 	<!-- //banner -->   
@@ -21,27 +28,26 @@
 	<div class="breadcrumb_dress">
 		<div class="container">
 			<ul>
-				<li><a href="index.jsp"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Home</a> <i>/</i></li>
-				<li>Single Page</li>
+				<c:url var="urlHome" value="/index.jsp" />
+				<li><a href="${urlHome}"><span class="glyphicon glyphicon-home" aria-hidden="true"></span><fmt:message key="Home"/></a> <i>/</i></li>
+				<li><fmt:message key="Details"/></li>
 			</ul>
 		</div>
 	</div>
 	<!-- //breadcrumbs -->  
+	
 	<!-- single -->
+<!-- start product details -->
 	<div class="single">
 		<div class="container">
 			<div class="col-md-4 single-left">
 				<div class="flexslider">
 					<ul class="slides">
-						<li data-thumb="images/22.jpg">
-							<div class="thumb-image"> <img src="images/22.jpg" data-imagezoom="true" class="img-responsive" alt=""> </div>
+						<c:forEach var="image" items="${computer.images}" begin="0" end="2">
+						<li data-thumb="${image}">
+							<div class="thumb-image"> <img src="${image}" data-imagezoom="true" class="img-responsive" alt=""> </div>
 						</li>
-						<li data-thumb="images/23.jpg">
-							 <div class="thumb-image"> <img src="images/23.jpg" data-imagezoom="true" class="img-responsive" alt=""> </div>
-						</li>
-						<li data-thumb="images/24.jpg">
-						   <div class="thumb-image"> <img src="images/24.jpg" data-imagezoom="true" class="img-responsive" alt=""> </div>
-						</li> 
+						</c:forEach>
 					</ul>
 				</div>
 				<!-- flexslider -->
@@ -62,41 +68,24 @@
 				<!-- //zooming-effect -->
 			</div>
 			<div class="col-md-8 single-right">
-				<h3>LAPTOP</h3>
-				<div class="rating1">
-					<span class="starRating">
-						<input id="rating5" type="radio" name="rating" value="5">
-						<label for="rating5">5</label>
-						<input id="rating4" type="radio" name="rating" value="4">
-						<label for="rating4">4</label>
-						<input id="rating3" type="radio" name="rating" value="3" checked>
-						<label for="rating3">3</label>
-						<input id="rating2" type="radio" name="rating" value="2">
-						<label for="rating2">2</label>
-						<input id="rating1" type="radio" name="rating" value="1">
-						<label for="rating1">1</label>
-					</span>
+				<h3>${computer.nameComputer}</h3>
+				<c:forEach begin="0" end="${computer.rate - 1}">
+				<div class="rating-left">
+					<img src="images/star-.png" alt=" " class="img-responsive" />
 				</div>
+				</c:forEach>
+				<br>
 				<div class="description">
-					<h5><i>Description</i></h5>
-					<p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore 
-						eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident.
-						Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut 
-						odit aut fugit, sed quia consequuntur magni dolores eos qui 
-						ratione voluptatem sequi nesciunt.</p>
+					<h5><i style="text-transform: uppercase"><fmt:message key="Description"/></i></h5>
+					<p>${computer.description}</p>
 				</div>
 				<div class="color-quality">
 					<div class="color-quality-left">
-						<h5>Color : </h5>
-						<ul>
-							<li><a href="#"><span></span></a></li>
-							<li><a href="#" class="brown"><span></span></a></li>
-							<li><a href="#" class="purple"><span></span></a></li>
-							<li><a href="#" class="gray"><span></span></a></li>
-						</ul>
+						<h5><fmt:message key="Type"/> :</h5>
+						<p  style="font-size:1.2em;color: #212121;font-weight: 600;text-transform: uppercase"><i>Laptop ${computer.type}</i></p>
 					</div>
 					<div class="color-quality-right">
-						<h5>Quality :</h5>
+						<h5><fmt:message key="Quantity"/> :</h5>
 						 <div class="quantity"> 
 							<div class="quantity-select">                           
 								<div class="entry value-minus1">&nbsp;</div>
@@ -121,91 +110,59 @@
 					</div>
 					<div class="clearfix"> </div>
 				</div>
-				<div class="occasional">
-					<h5>RAM :</h5>
-					<div class="colr ert">
-						<div class="check">
-							<label class="checkbox"><input type="checkbox" name="checkbox" checked=""><i> </i>4 GB</label>
-						</div>
-					</div>
-					<div class="colr">
-						<div class="check">
-							<label class="checkbox"><input type="checkbox" name="checkbox"><i> </i>8 GB</label>
-						</div>
-					</div>
-					<div class="colr">
-						<div class="check">
-							<label class="checkbox"><input type="checkbox" name="checkbox"><i> </i>16 GB</label>
-						</div>
-					</div>
-					<div class="clearfix"> </div>
+				<div class="occasional" style="margin-bottom:2rem;">
+					<h5><fmt:message key="Price"/> :</h5>
 				</div>
 				<div class="simpleCart_shelfItem">
-					<p><span>$460</span> <i class="item_price">$450</i></p>
-					<form action="#" method="post">
-						<input type="hidden" name="cmd" value="_cart">
-						<input type="hidden" name="add" value="1"> 
-						<input type="hidden" name="w3ls_item" value="Smart Phone"> 
-						<input type="hidden" name="amount" value="450.00">   
-						<button type="submit" class="w3ls-cart">Add to cart</button>
+					<p><span>$${computer.oldPrice }</span> <i class="item_price">$${computer.newPrice}</i></p>
+					<c:url var="addProduct" value="/AddProduct"></c:url>
+					<form action="${addProduct}" method="post">
+						<input type="hidden" name="quantity" value="1"> 
+						<input type="hidden" name="idComputer" value="${computer.idComputer }">   
+						<button type="submit" class="w3ls-cart"><fmt:message key="AddToCart"/></button>
 					</form>
 				</div> 
 			</div>
 			<div class="clearfix"> </div>
 		</div>
-	</div> 
+	</div>
+<!-- 	End products details  -->
+	
+<!-- Add a review -->
 	<div class="additional_info">
 		<div class="container">
 			<div class="sap_tabs">	
 				<div id="horizontalTab1" style="display: block; width: 100%; margin: 0px;">
 					<ul>
-						<li class="resp-tab-item" aria-controls="tab_item-0" role="tab"><span>Product Information</span></li>
-						<li class="resp-tab-item" aria-controls="tab_item-1" role="tab"><span>Reviews</span></li>
+						<li class="resp-tab-item" aria-controls="tab_item-0" role="tab"><span><fmt:message key="ProductInformation"/></span></li>
+						<li class="resp-tab-item" aria-controls="tab_item-1" role="tab"><span><fmt:message key="Reviews"/></span></li>
 					</ul>		
 					<div class="tab-1 resp-tab-content additional_info_grid" aria-labelledby="tab_item-0">
-						<h3>LAPTOP</h3>
-						<p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore 
-							eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident.
-							Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut 
-							odit aut fugit, sed quia consequuntur magni dolores eos qui 
-							ratione voluptatem sequi nesciunt.Ut enim ad minima veniam, quis nostrum 
-							exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea 
-							commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate 
-							velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat 
-							quo voluptas nulla pariatur.</p>
-					</div>	
+						<h3>${computer.nameComputer }</h3>
+						<p>${computer.description} , ${computer.description }</p>
+					</div>
+
 
 					<div class="tab-2 resp-tab-content additional_info_grid" aria-labelledby="tab_item-1">
-						<h4>(2) Reviews</h4>
+						<h4>(${sizeReviews}) <fmt:message key="Reviews"/></h4>
+						<c:forEach var="review" items="${reviews}">
 						<div class="additional_info_sub_grids">
 							<div class="col-xs-2 additional_info_sub_grid_left">
-								<img src="" alt=" " class="img-responsive" />
+								<img src="images/t2.png" alt=" " class="img-responsive" />
 							</div>
 							<div class="col-xs-10 additional_info_sub_grid_right">
 								<div class="additional_info_sub_grid_rightl">
-									<a href="single.jsp">Duong Tai</a>
+									<a href="single.jsp">${review.nameUser }</a>
 									<h5>Oct 06, 2019.</h5>
-									<p>Quis autem vel eum iure reprehenderit qui in ea voluptate 
-										velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat 
-										quo voluptas nulla pariatur.</p>
+									<p>${review.review }</p>
 								</div>
 								<div class="additional_info_sub_grid_rightr">
 									<div class="rating">
-										<div class="rating-left">
-											<img src="images/star-.png" alt=" " class="img-responsive">
-										</div>
-										<div class="rating-left">
-											<img src="images/star-.png" alt=" " class="img-responsive">
-										</div>
-										<div class="rating-left">
-											<img src="images/star-.png" alt=" " class="img-responsive">
-										</div>
-										<div class="rating-left">
-											<img src="images/star.png" alt=" " class="img-responsive">
-										</div>
-										<div class="rating-left">
-											<img src="images/star.png" alt=" " class="img-responsive">
-										</div>
+										<c:forEach begin="0" end="${review.rate - 1 }">
+											<div class="rating-left">
+												<img src="images/star-.png" alt=" " class="img-responsive">
+											</div>	
+										</c:forEach>
 										<div class="clearfix"> </div>
 									</div>
 								</div>
@@ -213,52 +170,33 @@
 							</div>
 							<div class="clearfix"> </div>
 						</div>
-						<div class="additional_info_sub_grids">
-							<div class="col-xs-2 additional_info_sub_grid_left">
-								<img src="" alt=" " class="img-responsive" />
-							</div>
-							<div class="col-xs-10 additional_info_sub_grid_right">
-								<div class="additional_info_sub_grid_rightl">
-									<a href="single.jsp">Hong Tien</a>
-									<h5>Oct 04, 2019.</h5>
-									<p>Quis autem vel eum iure reprehenderit qui in ea voluptate 
-										velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat 
-										quo voluptas nulla pariatur.</p>
-								</div>
-								<div class="additional_info_sub_grid_rightr">
-									<div class="rating">
-										<div class="rating-left">
-											<img src="images/star-.png" alt=" " class="img-responsive">
-										</div>
-										<div class="rating-left">
-											<img src="images/star-.png" alt=" " class="img-responsive">
-										</div>
-										<div class="rating-left">
-											<img src="images/star.png" alt=" " class="img-responsive">
-										</div>
-										<div class="rating-left">
-											<img src="images/star.png" alt=" " class="img-responsive">
-										</div>
-										<div class="rating-left">
-											<img src="images/star.png" alt=" " class="img-responsive">
-										</div>
-										<div class="clearfix"> </div>
-									</div>
-								</div>
-								<div class="clearfix"> </div>
-							</div>
-							<div class="clearfix"> </div>
-						</div>
+						</c:forEach>						
+
 						<div class="review_grids">
-							<h5>Add A Review</h5>
-							<form action="#" method="post">
-								<input type="text" name="Name" value="Name" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Name';}" required="">
-								<input type="email" name="Email" placeholder="Email" required="">
-								<input type="text" name="Telephone" value="Telephone" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Telephone';}" required="">
-								<textarea name="Review" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Add Your Review';}" required="">Add Your Review</textarea>
+							<h5><fmt:message key="AddReview"/></h5>
+							<c:url var="url" value="/addReview"></c:url>
+							<form action="${url}" method="post">
+								<textarea name="review" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '<fmt:message key="AddReview"/>';}" required=""><fmt:message key="AddReview"/></textarea>
+								<label style="margin-bottom: 2rem;">Danh gia :</label>
+								<div class="rating1">
+									<span class="starRating">
+										<input id="rating5" type="radio" name="rating" value="5" checked>
+										<label for="rating5">5</label>
+										<input id="rating4" type="radio" name="rating" value="4">
+										<label for="rating4">4</label>
+										<input id="rating3" type="radio" name="rating" value="3" >
+										<label for="rating3">3</label>
+										<input id="rating2" type="radio" name="rating" value="2">
+										<label for="rating2">2</label>
+										<input id="rating1" type="radio" name="rating" value="1">
+										<label for="rating1">1</label>
+									</span>
+								</div>
+								<input type="hidden" value="${computer.idComputer}" name="idComputer">								
 								<input type="submit" value="Submit" >
 							</form>
 						</div>
+						
 					</div> 			        					            	      
 				</div>	
 			</div>
@@ -274,130 +212,49 @@
 			</script>
 		</div>
 	</div>
+<!-- End add a review -->
+	
 	<!-- Related Products -->
+	<% List<Computer> relatedComputers = computerDao.getComputersWithType(computer.getType()); %>
+	<c:set var="relatedComputers" value="<%= relatedComputers %>"></c:set>
 	<div class="w3l_related_products">
 		<div class="container">
-			<h3>Related Products</h3>
-			<ul id="flexiselDemo2">			
-				<li>
-					<div class="w3l_related_products_grid">
-						<div class="agile_ecommerce_tab_left mobiles_grid">
-							<div class="hs-wrapper hs-wrapper3">
-								<img src="images/34.jpg" alt=" " class="img-responsive" />
-								<img src="images/35.jpg" alt=" " class="img-responsive" />
-								<img src="images/27.jpg" alt=" " class="img-responsive" />
-								<img src="images/28.jpg" alt=" " class="img-responsive" />
-								<img src="images/37.jpg" alt=" " class="img-responsive" /> 
-								<div class="w3_hs_bottom">
-									<div class="flex_ecommerce">
-										<a href="#" data-toggle="modal" data-target="#myModal6"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
+			<h3><fmt:message key="RelatedProducts"/></h3>
+			<ul id="flexiselDemo2">	
+				<c:forEach var="computer" items="${relatedComputers}" begin="0" end="3">
+					<li>
+						<div class="w3l_related_products_grid">
+							<div class="agile_ecommerce_tab_left mobiles_grid">
+								<div class="hs-wrapper hs-wrapper3">
+									<c:forEach var="image" items="${computer.images }">
+										<img src="${image }" alt=" " class="img-responsive" />
+									</c:forEach>
+									<div class="w3_hs_bottom">
+										<div class="flex_ecommerce">
+											<a href="#" data-toggle="modal" data-target="#${computer.idComputer}"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
+										</div>
 									</div>
 								</div>
-							</div>
-							<h5><a href="single.jsp">Kid's Toy</a></h5>
-							<div class="simpleCart_shelfItem"> 
-								<p class="flexisel_ecommerce_cart"><span>$150</span> <i class="item_price">$100</i></p>
-								<form action="#" method="post">
-									<input type="hidden" name="cmd" value="_cart">
-									<input type="hidden" name="add" value="1"> 
-									<input type="hidden" name="w3ls_item" value="Kid's Toy"> 
-									<input type="hidden" name="amount" value="100.00">   
-									<button type="submit" class="w3ls-cart">Add to cart</button>
-								</form> 
-							</div>
-						</div>
-					</div>
-				</li>
-				<li>
-					<div class="w3l_related_products_grid">
-						<div class="agile_ecommerce_tab_left mobiles_grid">
-							<div class="hs-wrapper hs-wrapper3">
-								<img src="images/36.jpg" alt=" " class="img-responsive" />
-								<img src="images/32.jpg" alt=" " class="img-responsive" />
-								<img src="images/33.jpg" alt=" " class="img-responsive" />
-								<img src="images/32.jpg" alt=" " class="img-responsive" />
-								<img src="images/36.jpg" alt=" " class="img-responsive" /> 
-								<div class="w3_hs_bottom">
-									<div class="flex_ecommerce">
-										<a href="#" data-toggle="modal" data-target="#myModal5"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
+								<c:url var="url" value="/productDetails?idComputer=${computer.idComputer}"></c:url>
+								<h5><a href="${url}">${computer.nameComputer }</a></h5>
+								<div class="simpleCart_shelfItem">
+									<p><span>$${computer.oldPrice }</span> <i class="item_price">$${computer.newPrice}</i></p>
+									<c:url var="addProduct" value="/AddProduct"></c:url>
+									<form action="${addProduct}" method="post">
+										<input type="hidden" name="quantity" value="1"> 
+										<input type="hidden" name="idComputer" value="${computer.idComputer }">   
+										<button type="submit" class="w3ls-cart"><fmt:message key="AddToCart"/></button>
+									</form>
+								</div> 
+								<c:if test="${computer.status == 'new' }">							
+									<div class="mobiles_grid_pos">
+										<h6>New</h6>
 									</div>
-								</div>
-							</div>
-							<h5><a href="single.jsp">Vacuum Cleaner</a></h5>
-							<div class="simpleCart_shelfItem">
-								<p class="flexisel_ecommerce_cart"><span>$960</span> <i class="item_price">$920</i></p>
-								<form action="#" method="post">
-									<input type="hidden" name="cmd" value="_cart" />
-									<input type="hidden" name="add" value="1" /> 
-									<input type="hidden" name="w3ls_item" value="Vacuum Cleaner" /> 
-									<input type="hidden" name="amount" value="920.00"/>   
-									<button type="submit" class="w3ls-cart">Add to cart</button>
-								</form>
-							</div>
-						</div>
-					</div>
-				</li>
-				<li>
-					<div class="w3l_related_products_grid">
-						<div class="agile_ecommerce_tab_left mobiles_grid">
-							<div class="hs-wrapper hs-wrapper3">
-								<img src="images/38.jpg" alt=" " class="img-responsive" />
-								<img src="images/37.jpg" alt=" " class="img-responsive" />
-								<img src="images/27.jpg" alt=" " class="img-responsive" />
-								<img src="images/28.jpg" alt=" " class="img-responsive" />
-								<img src="images/37.jpg" alt=" " class="img-responsive" /> 
-								<div class="w3_hs_bottom">
-									<div class="flex_ecommerce">
-										<a href="#" data-toggle="modal" data-target="#myModal3"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
-									</div>
-								</div>
-							</div>
-							<h5><a href="single.jsp">Microwave Oven</a></h5>
-							<div class="simpleCart_shelfItem">
-								<p class="flexisel_ecommerce_cart"><span>$650</span> <i class="item_price">$645</i></p>
-								<form action="#" method="post">
-									<input type="hidden" name="cmd" value="_cart" />
-									<input type="hidden" name="add" value="1" /> 
-									<input type="hidden" name="w3ls_item" value="Microwave Oven" /> 
-									<input type="hidden" name="amount" value="645.00"/>   
-									<button type="submit" class="w3ls-cart">Add to cart</button>
-								</form>
-							</div>
-						</div>
-					</div>
-				</li>
-				<li>
-					<div class="w3l_related_products_grid">
-						<div class="agile_ecommerce_tab_left mobiles_grid">
-							<div class="hs-wrapper hs-wrapper3">
-								<img src="images/p3.jpg" alt=" " class="img-responsive" />
-								<img src="images/p5.jpg" alt=" " class="img-responsive" />
-								<img src="images/p4.jpg" alt=" " class="img-responsive" />
-								<img src="images/p2.jpg" alt=" " class="img-responsive" />
-								<img src="images/p1.jpg" alt=" " class="img-responsive" /> 
-								<div class="w3_hs_bottom">
-									<div class="flex_ecommerce">
-										<a href="#" data-toggle="modal" data-target="#myModal4"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
-									</div>
-								</div>
-							</div>
-							<h5><a href="single.jsp">Music MP3 Player</a></h5>
-							<div class="simpleCart_shelfItem">
-								<p><span>$60</span> <i class="item_price">$58</i></p>
-								<form action="#" method="post">
-									<input type="hidden" name="cmd" value="_cart" />
-									<input type="hidden" name="add" value="1" /> 
-									<input type="hidden" name="w3ls_item" value="Ultra MP3 Player" /> 
-									<input type="hidden" name="amount" value="58.00"/>   
-									<button type="submit" class="w3ls-cart">Add to cart</button>
-								</form>
+								</c:if>
 							</div> 
-							<div class="mobiles_grid_pos">
-								<h6>New</h6>
-							</div>
-						</div> 
-					</div>
-				</li>
+						</div>
+					</li>
+				</c:forEach>		
 			</ul>
 			
 				<script type="text/javascript">
@@ -431,7 +288,10 @@
 		</div>
 	</div>
 	<!-- //Related Products -->
-	<div class="modal video-modal fade" id="myModal6" tabindex="-1" role="dialog" aria-labelledby="myModal6">
+	
+	<!-- show product details for related products -->
+	<c:forEach var="computer" items="${relatedComputers}" begin="0" end="3">
+	<div class="modal video-modal fade" id="${computer.idComputer }" tabindex="-1" role="dialog" aria-labelledby="myModal6">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -440,53 +300,27 @@
 				<section>
 					<div class="modal-body">
 						<div class="col-md-5 modal_body_left">
-							<img src="images/34.jpg" alt=" " class="img-responsive" />
+							<img src="${computer.representImage}" alt=" " class="img-responsive" />
 						</div>
 						<div class="col-md-7 modal_body_right">
-							<h4>Musical Kids Toy</h4>
-							<p>Ut enim ad minim veniam, quis nostrud 
-								exercitation ullamco laboris nisi ut aliquip ex ea 
-								commodo consequat.Duis aute irure dolor in 
-								reprehenderit in voluptate velit esse cillum dolore 
-								eu fugiat nulla pariatur. Excepteur sint occaecat 
-								cupidatat non proident, sunt in culpa qui officia 
-								deserunt mollit anim id est laborum.</p>
+							<h4>${computer.nameComputer }</h4>
+							<p>${computer.description }</p>
 							<div class="rating">
-								<div class="rating-left">
-									<img src="images/star-.png" alt=" " class="img-responsive" />
-								</div>
-								<div class="rating-left">
-									<img src="images/star-.png" alt=" " class="img-responsive" />
-								</div>
-								<div class="rating-left">
-									<img src="images/star-.png" alt=" " class="img-responsive" />
-								</div>
-								<div class="rating-left">
-									<img src="images/star.png" alt=" " class="img-responsive" />
-								</div>
-								<div class="rating-left">
-									<img src="images/star.png" alt=" " class="img-responsive" />
-								</div>
+								<c:forEach begin="1" end="${computer.rate}">
+									<div class="rating-left">
+										<img src="images/star-.png" alt=" " class="img-responsive" />
+									</div>
+								</c:forEach>
 								<div class="clearfix"> </div>
 							</div>
 							<div class="modal_body_right_cart simpleCart_shelfItem">
-								<p><span>$150</span> <i class="item_price">$100</i></p> 
-								<form action="#" method="post">
-									<input type="hidden" name="cmd" value="_cart">
-									<input type="hidden" name="add" value="1"> 
-									<input type="hidden" name="w3ls_item" value="Kids Toy"> 
-									<input type="hidden" name="amount" value="100.00">   
-									<button type="submit" class="w3ls-cart">Add to cart</button>
+								<p><span>$${computer.oldPrice }</span> <i class="item_price">$${computer.newPrice }</i></p> 
+								<c:url var="addProduct" value="/AddProduct"></c:url>
+								<form action="${addProduct}" method="post">
+									<input type="hidden" name="quantity" value="1"> 
+									<input type="hidden" name="idComputer" value="${computer.idComputer }">   
+									<button type="submit" class="w3ls-cart"><fmt:message key="AddToCart"/></button>
 								</form>
-							</div>
-							<h5>Color</h5>
-							<div class="color-quality">
-								<ul>
-									<li><a href="#"><span></span></a></li>
-									<li><a href="#" class="brown"><span></span></a></li>
-									<li><a href="#" class="purple"><span></span></a></li>
-									<li><a href="#" class="gray"><span></span></a></li>
-								</ul>
 							</div>
 						</div>
 						<div class="clearfix"> </div>
@@ -495,194 +329,10 @@
 			</div>
 		</div>
 	</div>
-	<div class="modal video-modal fade" id="myModal5" tabindex="-1" role="dialog" aria-labelledby="myModal5">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>						
-				</div>
-				<section>
-					<div class="modal-body">
-						<div class="col-md-5 modal_body_left">
-							<img src="images/36.jpg" alt=" " class="img-responsive">
-						</div>
-						<div class="col-md-7 modal_body_right">
-							<h4>Dry Vacuum Cleaner</h4>
-							<p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea 
-								commodo consequat.Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat 
-								cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-							<div class="rating">
-								<div class="rating-left">
-									<img src="images/star-.png" alt=" " class="img-responsive">
-								</div>
-								<div class="rating-left">
-									<img src="images/star-.png" alt=" " class="img-responsive">
-								</div>
-								<div class="rating-left">
-									<img src="images/star-.png" alt=" " class="img-responsive">
-								</div>
-								<div class="rating-left">
-									<img src="images/star.png" alt=" " class="img-responsive">
-								</div>
-								<div class="rating-left">
-									<img src="images/star.png" alt=" " class="img-responsive">
-								</div>
-								<div class="clearfix"> </div>
-							</div>
-							<div class="modal_body_right_cart simpleCart_shelfItem">
-								<p><span>$960</span> <i class="item_price">$920</i></p>
-								<form action="#" method="post">
-									<input type="hidden" name="cmd" value="_cart">
-									<input type="hidden" name="add" value="1"> 
-									<input type="hidden" name="w3ls_item" value="Vacuum Cleaner"> 
-									<input type="hidden" name="amount" value="920.00">   
-									<button type="submit" class="w3ls-cart">Add to cart</button>
-								</form>
-							</div>
-							<h5>Color</h5>
-							<div class="color-quality">
-								<ul>
-									<li><a href="#"><span></span></a></li>
-									<li><a href="#" class="brown"><span></span></a></li>
-									<li><a href="#" class="purple"><span></span></a></li>
-									<li><a href="#" class="gray"><span></span></a></li>
-								</ul>
-							</div>
-						</div>
-						<div class="clearfix"> </div>
-					</div>
-				</section>
-			</div>
-		</div>
-	</div>
-	<div class="modal video-modal fade" id="myModal4" tabindex="-1" role="dialog" aria-labelledby="myModal4">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>						
-				</div>
-				<section>
-					<div class="modal-body">
-						<div class="col-md-5 modal_body_left">
-							<img src="images/p3.jpg" alt=" " class="img-responsive" />
-						</div>
-						<div class="col-md-7 modal_body_right">
-							<h4>Music MP3 Player </h4>
-							<p>Ut enim ad minim veniam, quis nostrud 
-								exercitation ullamco laboris nisi ut aliquip ex ea 
-								commodo consequat.Duis aute irure dolor in 
-								reprehenderit in voluptate velit esse cillum dolore 
-								eu fugiat nulla pariatur. Excepteur sint occaecat 
-								cupidatat non proident, sunt in culpa qui officia 
-								deserunt mollit anim id est laborum.</p>
-							<div class="rating">
-								<div class="rating-left">
-									<img src="images/star-.png" alt=" " class="img-responsive" />
-								</div>
-								<div class="rating-left">
-									<img src="images/star-.png" alt=" " class="img-responsive" />
-								</div>
-								<div class="rating-left">
-									<img src="images/star-.png" alt=" " class="img-responsive" />
-								</div>
-								<div class="rating-left">
-									<img src="images/star-.png" alt=" " class="img-responsive" />
-								</div>
-								<div class="rating-left">
-									<img src="images/star.png" alt=" " class="img-responsive" />
-								</div>
-								<div class="clearfix"> </div>
-							</div>
-							<div class="modal_body_right_cart simpleCart_shelfItem">
-								<p><span>$60</span> <i class="item_price">$58</i></p>
-								<form action="#" method="post">
-									<input type="hidden" name="cmd" value="_cart" />
-									<input type="hidden" name="add" value="1" /> 
-									<input type="hidden" name="w3ls_item" value="MP3 Player" /> 
-									<input type="hidden" name="amount" value=" $58.00"/>   
-									<button type="submit" class="w3ls-cart">Add to cart</button>
-								</form>
-							</div>
-							<h5>Color</h5>
-							<div class="color-quality">
-								<ul>
-									<li><a href="#"><span></span></a></li>
-									<li><a href="#" class="brown"><span></span></a></li>
-									<li><a href="#" class="purple"><span></span></a></li>
-									<li><a href="#" class="gray"><span></span></a></li>
-								</ul>
-							</div>
-						</div>
-						<div class="clearfix"> </div>
-					</div>
-				</section>
-			</div>
-		</div>
-	</div>
-	<div class="modal video-modal fade" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myModal3">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>						
-				</div>
-				<section>
-					<div class="modal-body">
-						<div class="col-md-5 modal_body_left">
-							<img src="images/38.jpg" alt=" " class="img-responsive">
-						</div>
-						<div class="col-md-7 modal_body_right">
-							<h4>Kitchen &amp; Dining Accessories</h4>
-							<p>Ut enim ad minim veniam, quis nostrud 
-								exercitation ullamco laboris nisi ut aliquip ex ea 
-								commodo consequat.Duis aute irure dolor in 
-								reprehenderit in voluptate velit esse cillum dolore 
-								eu fugiat nulla pariatur. Excepteur sint occaecat 
-								cupidatat non proident, sunt in culpa qui officia 
-								deserunt mollit anim id est laborum.</p>
-							<div class="rating">
-								<div class="rating-left">
-									<img src="images/star-.png" alt=" " class="img-responsive">
-								</div>
-								<div class="rating-left">
-									<img src="images/star-.png" alt=" " class="img-responsive">
-								</div>
-								<div class="rating-left">
-									<img src="images/star-.png" alt=" " class="img-responsive">
-								</div>
-								<div class="rating-left">
-									<img src="images/star-.png" alt=" " class="img-responsive">
-								</div>
-								<div class="rating-left">
-									<img src="images/star.png" alt=" " class="img-responsive">
-								</div>
-								<div class="clearfix"> </div>
-							</div>
-							<div class="modal_body_right_cart simpleCart_shelfItem">
-								<p><span>$650</span> <i class="item_price">$645</i></p>
-								<form action="#" method="post">
-									<input type="hidden" name="cmd" value="_cart">
-									<input type="hidden" name="add" value="1"> 
-									<input type="hidden" name="w3ls_item" value="Microwave Oven"> 
-									<input type="hidden" name="amount" value="645.00">   
-									<button type="submit" class="w3ls-cart">Add to cart</button>
-								</form>
-							</div>
-							<h5>Color</h5>
-							<div class="color-quality">
-								<ul>
-									<li><a href="#"><span></span></a></li>
-									<li><a href="#" class="brown"><span></span></a></li>
-									<li><a href="#" class="purple"><span></span></a></li>
-									<li><a href="#" class="gray"><span></span></a></li>
-								</ul>
-							</div>
-						</div>
-						<div class="clearfix"> </div>
-					</div>
-				</section>
-			</div>
-		</div>
-	</div>  
+	</c:forEach>
+<!-- End show product details for related products-->
+	
+	
 	<!-- //single -->
 	
 	<!-- send mail and footer -->

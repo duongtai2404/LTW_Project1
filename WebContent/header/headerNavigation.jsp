@@ -1,18 +1,44 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
+<!-- Start change language -->
+	<div class="text-center" style="margin-left: 3%;margin-bottom: -15px;margin-top: 0.5rem">
+		<div class="dropdown">
+		  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		    <fmt:message key="ChangeLanguage" />
+		  </button>
+		  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="margin-left: 43%">
+				<c:url var="urlLanguageVi" value="/ChangeLanguage?language=vi"></c:url> 
+				<div class="text-center" ><a style="" class="dropdown-item" href="${urlLanguageVi}"><fmt:message key="VietNamese"/></a></div>
+				<c:url var="urlLanguageEn" value="/ChangeLanguage?language=en_US"></c:url>
+				<div class="text-center" ><a style="" class="dropdown-item" href="${urlLanguageEn}"><fmt:message key="English"/></a></li></div>
+		  </div>
+		</div>
+	</div>
+
+<!-- End change language -->
+
+
 <!-- header -->
 	<div class="header" id="home1">
 		<div class="container">
-			<div class="w3l_login">
+			<div class="w3l_login" style="max-width: 50px">
 				<c:choose>
 					<c:when test="${empty user}">
 						<a href="#" data-toggle="modal" data-target="#myModal88"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></a>
 					</c:when>
 					<c:otherwise>
-						<span><h5><fmt:message key="Hello" />${user.userName }</h5></span>
-						<c:url var="url" value="/LogOut"></c:url>
-						<a href="${url}" style="margin-left:25px"><fmt:message key="LogOut"/></a>
+						<div class="dropdown">
+						  <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						    <fmt:message key="Hello" />${user.userName }
+						  </button>
+						  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+								<c:url var="urlLogOut" value="/LogOut"></c:url> 
+								<div class="text-center mb-2" ><a style="font-size:14px;display: contents;border:none;" class="dropdown-item" href="${urlLogOut}"><fmt:message key="LogOut"/></a></div>
+								<c:url var="urlRepairAccount" value="/RepairAccount"></c:url>
+								<div class="text-center" ><a style="font-size:14px;display: contents;border:none;" class="dropdown-item" href="${urlRepairAccount} }"><fmt:message key="RepairAccount"/></a></li></div>
+						  </div>
+						</div>											
 					</c:otherwise>
 				</c:choose>
 			</div>
@@ -23,22 +49,94 @@
 				<input class="search_box" type="checkbox" id="search_box">
 				<label class="icon-search" for="search_box"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></label>
 				<div class="search_form">
-					<form action="#" method="post">
-						<input type="text" name="Search" placeholder="<fmt:message key="Search" />">
-						<input type="submit" value="<fmt:message key="Send" />">
+					<c:url var="searchComputers" value="/SearchComputers"></c:url>
+					<form action="${searchComputers }" method="post">
+						<input style="width: 355px" type="text" name="Search" placeholder="<fmt:message key="SearchProduct" />">
+						<input type="submit" value="<fmt:message key="Search" />">
 					</form>
 				</div>
 			</div>
-			<div class="cart cart box_1"> 
-				<form action="#" method="post" class="last"> 
-					<input type="hidden" name="cmd" value="_cart" />
-					<input type="hidden" name="display" value="1" />
-					<button class="w3view-cart" type="submit" name="submit" value=""><i class="fa fa-cart-arrow-down" aria-hidden="true"></i></button>
-				</form>   
-			</div>  
+
+			<div class="box_1"> 
+				<button type="button" class="w3view-cart" data-toggle="modal" data-target="#miniCart"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i></button>				
+			</div>
+			
+			<!--mini cart -->
+			<div class="modal fade bd-example-modal-sm" id="miniCart" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			  <div class="modal-dialog" role="document">
+			    <div class="modal-content">
+			      <div class="modal-header" style="margin-top: 1rem;margin-left: -1.5rem">
+			      <h6 class="modal-title" id="exampleModalLabel"><fmt:message key="ShoppingCart"/></h6>
+			      </div>
+			      <div class="modal-body" style="padding-bottom: 1rem">
+			      	<c:choose>
+			      		<c:when test="${shoppingCart.size == 0}">
+			      			<h4 class="text-center"><fmt:message key="NoProduct"/></h4>
+			      		</c:when>
+			      		<c:otherwise>
+			      			<table class="table" style="margin-bottom: 0px">
+							  <tbody>
+							  <c:forEach var="item" items="${shoppingCart.items}">
+							    <tr>
+							      <th scope="row" style="width: 30%">${item.computer.nameComputer}</th>
+							      <td style="width: 20%;text-align: center;">${item.quantity }</td>
+							      <td style="width: 5%">
+							      	<c:url var="decreaseQuantityProduct" value="/DecreaseQuantityProduct"></c:url>
+							      	<form action="${decreaseQuantityProduct}" method="post">
+										<input type="hidden" name="showMiniCart" value="show">	
+										<input type="hidden" name="idComputer" value="${item.computer.idComputer}">						      	
+								      	<button type="submit" class="btn btn-secondary">-</button>
+							      	</form>
+							      </td>
+							      <td style="width: 5%">
+							      	<c:url var="addProduct" value="/AddProduct"></c:url>
+							      	<form action="${addProduct}" method="post">
+							      		<input type="hidden" name="showMiniCart" value="show">
+							      		<input type="hidden" name="idComputer" value="${item.computer.idComputer}">
+								      	<button type="submit" class="btn btn-info">+</button>
+							      	</form>
+							      </td>
+							      <td style="width: 30%;text-align: center;">$${item.price }</td>
+							      <td class=" text-right">
+							      	<c:url var="removeProduct" value="/RemoveProduct"></c:url>
+							      	<form action="${removeProduct}" method="post">
+										<input type="hidden" name="showMiniCart" value="show">
+										<input type="hidden" name="idComputer" value="${item.computer.idComputer}">							      	
+								      	<button type="submit" class="btn btn-secondary">x</button>
+							      	</form>
+							      </td>
+							    </tr>
+							   </c:forEach>
+							  </tbody>
+							</table>
+			      		</c:otherwise>
+			      	</c:choose>
+			      </div>
+			      <div class="modal-footer">
+			      	<c:if test="${shoppingCart.size > 0 }">
+			      		<h4 style="float: left;font-weight: 600"><fmt:message key="Subtotal"/> : $${shoppingCart.subtotal}</h4>
+			      	</c:if>
+			        <button type="button" class="btn btn-secondary"  data-dismiss="modal"><fmt:message key="Close"/></button>
+			        <c:if test="${shoppingCart.size > 0 }">
+			        <c:url var="urlShoppingCart" value="/shoppingCart"></c:url>
+			        <form action="${urlShoppingCart}" method="post" style="display: inline-block;">
+				        <button type="submit" class="btn btn-primary"><fmt:message key="Pay"/></button>
+			        </form>
+			        </c:if>
+			      </div>
+			    </div>
+			  </div>
+			</div>	
+			<!--end mini cart -->
 		</div>
 	</div>
 	<!-- //header -->
+	
+	<c:if test="${!empty showMiniCart}">
+		<script>
+			$('#miniCart').modal('show');
+		</script>
+	</c:if>	
 	
 	<!-- navigation -->
 	<div class="navigation">
@@ -100,12 +198,6 @@
 						</li>
 						<c:url var="urlShoppingCart" value="/shoppingCart"></c:url>
 						<li><a href="${urlShoppingCart }"><fmt:message key="ShoppingCart" /></a></li> 
-<!-- 						<li class="w3pages"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Pages <span class="caret"></span></a> -->
-<!-- 							<ul class="dropdown-menu"> -->
-<!-- 								<li><a href="icons.jsp">Web Icons</a></li> -->
-<!-- 								<li><a href="codes.jsp">Short Codes</a></li>      -->
-<!-- 							</ul> -->
-<!-- 						</li>   -->
 						<li><a href="mail.jsp"><fmt:message key="MailUs" /></a></li>
 					</ul>
 				</div>

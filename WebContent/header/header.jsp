@@ -4,7 +4,14 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql" %>
 
-<fmt:setLocale value="vi" scope="session"/>
+<c:choose>
+	<c:when test="${empty language }">
+		<fmt:setLocale value="vi" scope="session"/>
+	</c:when>
+	<c:otherwise>
+		<fmt:setLocale value="${language }" scope="session"/>
+	</c:otherwise>
+</c:choose>
 
 <!DOCTYPE html>
 <html lang="vi">

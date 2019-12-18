@@ -209,16 +209,58 @@ public class ComputerDao implements ObjectDao{
 		return newComputers;
 	}
 	
+	/*find computer which has name like search parameter
+	 * @parameter: String search
+	 * @return: List<Computer>
+	 */
+	public List<Computer> searchComputerWithName(String search){
+		//list computers which been found
+		List<Computer> searchComputer = new ArrayList<Computer>();
+		//sql which finds computer with search
+		String sql = "SELECT * FROM computers WHERE namecomputer LIKE '%" + search + "%';";
+		ResultSet resultSet;
+		try {
+			//select data from database
+			resultSet = connectToDatabase.selectData(sql);
+			Computer computer;
+			while(resultSet.next()){
+				String idComputer = resultSet.getString(2);
+				String nameComputer = resultSet.getString(3);
+				String description  =resultSet.getString(4);
+				String type = resultSet.getString(5);
+				String status = resultSet.getString(6);
+				int oldPrice = resultSet.getInt(7);
+				int newPrice = resultSet.getInt(8);
+				List<String> images = new ArrayList<String>();
+				images.add(resultSet.getString(10));
+				images.add(resultSet.getString(11));
+				images.add(resultSet.getString(12));
+				images.add(resultSet.getString(13));
+				int rate = resultSet.getInt(14);
+				
+				computer = new Computer(idComputer, nameComputer, description, type, status, oldPrice, newPrice, images, rate);
+				searchComputer.add(computer);
+			}
+		} catch (Exception e) {
+			System.out.println("Couldn't select data from computers database in searchComputerWithName" + e);
+			e.printStackTrace();
+		}
+		return searchComputer;
+	}
 	
 	public static void main(String[] args) {
 		ComputerDao cd = new ComputerDao();
-		List<String> images = new ArrayList<String>();
-		images.add("images/25.jpg");
-		images.add("images/24.jpg");
-		images.add("images/23.jpg");
-		images.add("images/22.jpg");
-		Computer computer = new Computer("as-eb-004", "Asus EeeBook", "La mot trong cac san pham di dau xu huong netbook. EeBook voi man hinh 11 inch da dem den cho nguoi dung nhieu dieu bat ngo. Cau hinh duoc trang bi CPU quad-cỏe Intel Atom, 2GB RAM va 32GB dung luong luu tru. Thoi luong pin keo dai 12 gio.", "asus", "new", 450, 4000, images, 5);
-		cd.add(computer);
+//		List<String> images = new ArrayList<String>();
+//		images.add("images/25.jpg");
+//		images.add("images/24.jpg");
+//		images.add("images/23.jpg");
+//		images.add("images/22.jpg");
+//		Computer computer = new Computer("as-eb-004", "Asus EeeBook", "La mot trong cac san pham di dau xu huong netbook. EeBook voi man hinh 11 inch da dem den cho nguoi dung nhieu dieu bat ngo. Cau hinh duoc trang bi CPU quad-cỏe Intel Atom, 2GB RAM va 32GB dung luong luu tru. Thoi luong pin keo dai 12 gio.", "asus", "new", 450, 4000, images, 5);
+//		cd.add(computer);
+		List<Computer> list = cd.searchComputerWithName("asus");
+		for (Computer computer : list) {
+			System.out.println(computer.getNameComputer());
+		}
 	}
 
 }
