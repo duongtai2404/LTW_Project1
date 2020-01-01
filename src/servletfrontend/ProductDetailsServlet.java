@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import sun.rmi.server.Dispatcher;
 import model.Computer;
 import model.Review;
 import dao.ComputerDao;
@@ -36,7 +35,7 @@ public class ProductDetailsServlet extends HttpServlet {
 		}
 		
 		HttpSession session = request.getSession();
-		ComputerDao computerDao = (ComputerDao)session.getAttribute("computerDao");
+		ComputerDao computerDao = (ComputerDao)getServletContext().getAttribute("computerDao");
 		Computer computer = (Computer)computerDao.find(idComputer);
 		
 		ReviewDao reviewDao = new ReviewDao();

@@ -10,6 +10,12 @@ public class ShoppingCartItem {
 		this.quantity = 1;
 		this.price = computer.getNewPrice();
 	}
+	
+	public ShoppingCartItem(Computer computer,int quantity) {
+		this.computer = computer;
+		this.quantity = quantity;
+		this.price = computer.getNewPrice() * quantity;
+	}
 
 	public ShoppingCartItem(Computer computer, int quantity, int price) {
 		super();
@@ -52,6 +58,16 @@ public class ShoppingCartItem {
 		return true;
 	}
 	
+	/*The quantity been increased quatity(parameter) => return true
+	 * @parameter: int quantity
+	 * @return: boolean
+	 */
+	public boolean increasingTheQuantityWithQuantity(int quantity){
+		this.quantity = this.quantity + quantity;
+		price = computer.getNewPrice() * this.quantity;
+		return true;
+	}
+	
 	/*The quantity been decreased 1
 	 * @parameter: null
 	 * @return: boolean
@@ -61,4 +77,11 @@ public class ShoppingCartItem {
 		price = price - computer.getNewPrice();
 		return true;
 	}
+
+	@Override
+	public String toString() {
+		return computer.getNameComputer() + "\t" + quantity + "\t $" + computer.getNewPrice() + "\t $" + price;
+	}
+	
+	
 }

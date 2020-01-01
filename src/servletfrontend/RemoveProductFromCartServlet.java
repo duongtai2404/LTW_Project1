@@ -41,11 +41,23 @@ public class RemoveProductFromCartServlet extends HttpServlet {
 		//save shopping cart into session
 		session.setAttribute("shoppingCart", shoppingCart);
 		
-		if(showMiniCart != null){
-			request.setAttribute("showMiniCart",showMiniCart);
-		}
-		
 		String referer = request.getHeader("Referer");
+		if(showMiniCart != null){
+			if(referer.contains("showMiniCart") || referer.contains("shoppingCart")){				
+				response.sendRedirect(referer);
+				return;
+			}
+			else{			
+				if(!referer.contains("?")){
+					referer = referer + "?showMiniCart=true";
+				}
+				else{
+					referer = referer + "&showMiniCart=true";
+				}
+			}
+			
+		}
+
 		response.sendRedirect(referer);
 	}
 

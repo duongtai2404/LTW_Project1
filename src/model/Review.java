@@ -5,17 +5,27 @@ public class Review {
 	private String idComputer;
 	private String review;
 	private int rate;
+	private String avatarUser;
 	
 	public Review() {
 
 	}
 
-	public Review(String nameUser, String idComputer, String review, int rate) {
+	public Review(String nameUser, String idComputer, String review, int rate,String avatarUser) {
 		super();
 		this.nameUser = nameUser;
 		this.idComputer = idComputer;
 		this.review = review;
 		this.rate = rate;
+		this.avatarUser = avatarUser;
+	}
+
+	public String getAvatarUser() {
+		return avatarUser;
+	}
+
+	public void setAvatarUser(String avatarUser) {
+		this.avatarUser = avatarUser;
 	}
 
 	public String getNameUser() {

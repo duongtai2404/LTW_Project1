@@ -39,8 +39,7 @@ public class ReviewDao implements ObjectDao {
 	@Override
 	public Object find(String objectID) {
 		String idComputer = objectID;
-		String sql = "SELECT * FROM reviews WHERE idcomputer='" + idComputer +"';";
-		
+		String sql = "SELECT DISTINCT reviews.*,users.avatar FROM reviews,users WHERE reviews.name=users.name AND reviews.idcomputer='" + idComputer +"';";
 		//List review about computer
 		ArrayList<Review> reviews = new ArrayList<Review>();
 		Review reviewAboutComputer;
@@ -52,7 +51,8 @@ public class ReviewDao implements ObjectDao {
 				String nameUser = resultSet.getString(1);
 				String review = resultSet.getString(3);
 				int rate = resultSet.getInt(4);
-				reviewAboutComputer = new Review(nameUser, idComputer, review, rate);
+				String avatarUser = resultSet.getString(5);
+				reviewAboutComputer = new Review(nameUser, idComputer, review, rate,avatarUser);
 				reviews.add(reviewAboutComputer);
 			}
 		} catch (Exception e) {

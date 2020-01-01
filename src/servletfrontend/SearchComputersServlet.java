@@ -34,7 +34,7 @@ public class SearchComputersServlet extends HttpServlet {
 		//get value from parameter search
 		String search = request.getParameter("Search");
 		//get computerDao in session
-		ComputerDao computerDao = (ComputerDao)sesion.getAttribute("computerDao");
+		ComputerDao computerDao = (ComputerDao)getServletContext().getAttribute("computerDao");
 		//select data from computers database which has name like search
 		List<Computer> searchComputers = computerDao.searchComputerWithName(search);
 		

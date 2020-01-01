@@ -22,7 +22,6 @@ public class SecurityConfig {
 		//List url what role user can access;
 		List<String> urlWhatUserCanAccess = new ArrayList<String>();
 		urlWhatUserCanAccess.add("/shoppingCart");
-		urlWhatUserCanAccess.add("/addReview");
 		//add list url what need to Login by user;
 		urlsWhatAreNeedToLogIn.put(ROLE_USER, urlWhatUserCanAccess);
 		

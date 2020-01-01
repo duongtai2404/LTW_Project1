@@ -126,7 +126,7 @@ label.icon-search {
 }
 .search_box:checked~.search_form{
     width: 500px;
-    height: 62px;
+    height: 200px;
     padding: 10px;
     top: 44px;
 	transition: height 0.2s ease-out, top 0.2s ease-out, padding 0.2s ease-out, 0.3s width ease-out 0.2s;
@@ -1482,7 +1482,8 @@ div#horizontalTab ul {
 ::-webkit-input-placeholder{
 	color:#212121 !important;
 }
-.register input[type="submit"]{
+
+.register input[type="button"]{
 	outline:none;
 	border:none;
 	background:#212121;
@@ -1493,7 +1494,8 @@ div#horizontalTab ul {
 	text-transform:uppercase;
 	margin:2em 0 0;
 }
-.register input[type="submit"]:hover{
+
+.register input[type="button"]:hover{
 	background:#3c43a4;
 }
 div#OR {
@@ -2926,7 +2928,7 @@ div#horizontalTab1 ul {
 	min-height:200px;
 	margin-bottom:.8em;
 }
-.review_grids input[type="submit"]{
+.review_grids input[type="button"]{
 	outline:none;
 	padding:10px 0;
 	font-size:1em;
@@ -2935,7 +2937,7 @@ div#horizontalTab1 ul {
 	background:#ff5063;
 	border:none;
 }
-.review_grids input[type="submit"]:hover{
+.review_grids input[type="button"]:hover{
 	background:#3c43a4;
 }
 .review_grids form {
@@ -4639,7 +4641,7 @@ td.invert-image a img {
 	.resp-tab-item {
 		padding: 5px 21px;
 	}
-	.review_grids input[type="submit"] {
+	.review_grids input[type="button"] {
 		font-size: 14px;
 		width: 100%;
 	}

@@ -8,13 +8,22 @@ public class User {
 	private String address;
 	private int phone;
 	private String role;
+	private String avatar;
 	
+	public String getAvatar() {
+		return avatar;
+	}
+
+	public void setAvatar(String avatar) {
+		this.avatar = avatar;
+	}
+
 	public User(){
 		
 	}
 	
 	public User(String userName, String password, String emailAddress,
-			String address, int phone, String role) {
+			String address, int phone, String role,String avatar) {
 		super();
 		this.userName = userName;
 		this.password = password;
@@ -22,7 +31,10 @@ public class User {
 		this.address = address;
 		this.phone = phone;
 		this.role = role;
+		this.avatar= avatar;
 	}
+	
+	
 
 	public String getUserName() {
 		return userName;

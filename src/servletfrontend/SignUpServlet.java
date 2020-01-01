@@ -1,6 +1,7 @@
 package servletfrontend;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -30,12 +31,13 @@ public class SignUpServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		//Connect to database
 		UserDao userDao = new UserDao();
-		
 		User user;
+		
+		PrintWriter out = response.getWriter();
 		
 		String userName = request.getParameter("Name");
 		String address = request.getParameter("Address");
-		String emailAddress = request.getParameter("Email");
+		String emailAddress = request.getParameter("EmailAddress");
 		int phone;
 		if(request.getParameter("Phone") == ""){
 			phone = 0;	
@@ -45,33 +47,65 @@ public class SignUpServlet extends HttpServlet {
 		}
 		
 		//this wrongUser is used to send back data if error
-		User wrongUser = new User(userName, "", emailAddress, address, phone, "");
+		User wrongUser = new User(userName, "", emailAddress, address, phone, "","");
 		
-		String errorSignup;
+		String errorSignUp;
 		
 		if(userDao.userIsExists(userName)){
-			errorSignup = "UserNameIsExists";
-			session.setAttribute("errorSignup", errorSignup);
-			session.setAttribute("wrongUser", wrongUser);
+			errorSignUp = "UserNameIsExists";
+			request.setAttribute("errorSignUp", errorSignUp);
 		}
 		else{
 			String password = request.getParameter("Password");
 			String confirmPassword = request.getParameter("ConfirmPassword");
 			if(!password.equalsIgnoreCase(confirmPassword)){
-				errorSignup = "WorngConfirmPassword";
-				session.setAttribute("errorSignup", errorSignup);
-				session.setAttribute("wrongUser", wrongUser);
+				errorSignUp = "WorngConfirmPassword";
+				request.setAttribute("errorSignUp", errorSignUp);
+				
 			}
 			else{
 				//if signup is success, create new user in database and create user in session
 				String role = "user";
-				user = new User(userName, password, emailAddress, address, phone, role);
+				String avatar = "images/t2.png";
+				user = new User(userName, password, emailAddress, address, phone, role,avatar);
 				userDao.add(user);
 				session.setAttribute("user", user);
-			}
+				out.write("signupsuccess");
+				return;
+			}	
 		}
 		
-		getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
+		request.setAttribute("wrongUser", wrongUser);
+		
+		request.getRequestDispatcher("/ajax/SignUp.jsp").forward(request, response);
+			
+		
+		
+//		String errorSignup;
+//		
+//		if(userDao.userIsExists(userName)){
+//			errorSignup = "UserNameIsExists";
+//			session.setAttribute("errorSignup", errorSignup);
+//			session.setAttribute("wrongUser", wrongUser);
+//		}
+//		else{
+//			String password = request.getParameter("Password");
+//			String confirmPassword = request.getParameter("ConfirmPassword");
+//			if(!password.equalsIgnoreCase(confirmPassword)){
+//				errorSignup = "WorngConfirmPassword";
+//				session.setAttribute("errorSignup", errorSignup);
+//				session.setAttribute("wrongUser", wrongUser);
+//			}
+//			else{
+//				//if signup is success, create new user in database and create user in session
+//				String role = "user";
+//				user = new User(userName, password, emailAddress, address, phone, role);
+//				userDao.add(user);
+//				session.setAttribute("user", user);
+//			}
+//		}
+//		
+//		getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
 	}
 
 }

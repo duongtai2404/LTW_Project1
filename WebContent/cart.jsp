@@ -20,28 +20,35 @@
 	
 	<div class="container" style="margin: 1rem;width: 98%;">
 		<div class="header-of-userscenario" style="background-color: #9c8b8b1c;font-size: 15px;padding: 15px;">
-			<h4 style="color: red;margin: 1rem"><fmt:message key="ReceiptAddress"/></h4>
 			<div class="row">
-				<div class="col-lg-3 col-md-3 text-center" style="margin-left: -4%">
+				<div class="col-lg-3 col-md-3 text-center">
+					<h4 style="color: red;margin: 1rem"><fmt:message key="ReceiptAddress"/></h4>
 					<h4 style="font-weight: 600">${user.userName }</h4>
 				</div>
-				<div class="col-lg-9 col-md-9">
-					<form action="#" method="get">
-						<div class="col-lg-3 col-md-3" >
-							<input type="number" value="${user.phone}" name="phone" style="width:100%">
-						</div>
-						<div class="col-lg-7 col-md-7" >
-							<input type="text" value="${user.address}" name="address" style="width:100%">
-						</div>
-						<div class="col-lg-2 col-md-2 text-center">
-							<button type="submit" class="btn btn-secondary"><fmt:message key="Change"/></button>
-						</div>
-					</form>
+				
+				<div class="col-lg-2 col-md-2 text-left">
+					<h5 style="font-size: 18px;margin:.9rem ">Phone: </h5>
+					<h5 style="font-size: 18px;margin:.9rem">Address: </h5>
+					<h5 style="font-size: 18px;margin:.9rem">Email: </h5>
 				</div>
+				<c:url var="changeInfomation" value="/ChangeInfomation"></c:url>
+				<form action="${changeInfomation}" method="post">
+					<div class="col-lg-4 col-md-4 text-left">
+						<div style="margin:.5rem;margin-left: -20%"><input type="number" name="phone" value="${user.phone}" required="required"></div>
+						<div style="margin:.5rem;margin-left: -20%"><input style="width: 100%;" type="text" name="address" value="${user.address}" required="required"></div>
+						<div style="margin:.5rem;margin-left: -20%"><input style="width: 100%;" type="email" name="emailAddress" value="${user.emailAddress}" required="required"></div>
+					</div>
+					
+					<div class="col-lg-2 col-md-2 text-right">
+						<button style="margin-top: 20%;width: 110px;height: 40px;font-size: 15px" type="submit" class="btn btn-secondary"><fmt:message key="Change"/></button>
+					</div>
+				</form>
+			
 			</div>
+			<div class="text-center"><p style="color: red"><fmt:message key="Note"/></p></div>
 		</div>
 		
-		<div class="body-of-userscenario mt-3" style="background-color: #9c8b8b1c">
+		<div class="body-of-userscenario mt-3" style="background-color: #9c8b8b1c" id="shoppingCart">
 			<c:choose>
 	      		<c:when test="${shoppingCart.size == 0}">
 	      			<h3 class="text-center" style="margin: 2rem;font-weight: 600;min-height:100px;padding: 1rem"><fmt:message key="NoProduct"/></h3>
@@ -58,7 +65,7 @@
 					      	<form action="${decreaseQuantityProduct}" method="post">
 								<input type="hidden" name="showMiniCart" value="show">	
 								<input type="hidden" name="idComputer" value="${item.computer.idComputer}">						      	
-						      	<button type="submit" class="btn btn-secondary">-</button>
+						      	<button type="button" onclick="decreaseQuantityProduct('${item.computer.idComputer}')" class="btn btn-secondary">-</button>
 					      	</form>
 					      </td>
 					      <td style="width: 5%">
@@ -66,7 +73,7 @@
 					      	<form action="${addProduct}" method="post">
 					      		<input type="hidden" name="showMiniCart" value="show">
 					      		<input type="hidden" name="idComputer" value="${item.computer.idComputer}">
-						      	<button type="submit" class="btn btn-info">+</button>
+						      	<button type="button" onclick="increaseQuantityProduct('${item.computer.idComputer}')" class="btn btn-info">+</button>
 					      	</form>
 					      </td>
 					      <td style="width: 30%;text-align: center;font-size: 18px;font-weight: 600;">$${item.price }</td>
@@ -75,7 +82,7 @@
 					      	<form action="${removeProduct}" method="post">
 								<input type="hidden" name="showMiniCart" value="show">
 								<input type="hidden" name="idComputer" value="${item.computer.idComputer}">							      	
-						      	<button type="submit" class="btn btn-secondary">x</button>
+						      	<button type="button" onclick="removeProduct('${item.computer.idComputer}')" class="btn btn-secondary">x</button>
 					      	</form>
 					      </td>
 					    </tr>
@@ -83,16 +90,37 @@
 					   </c:forEach>
 					  </tbody>
 					</table>
+					<div class="text-right" style="margin-top: 1rem">
+						<h3 style="font-weight: 600"><fmt:message key="Subtotal"/>: $${shoppingCart.subtotal}</h3>
+					</div>
 	      		</c:otherwise>
 	      	</c:choose>		
 		</div>	
 		
-		<div class="text-right" style="margin-top: 1rem">
-			<h3 style="font-weight: 600"><fmt:message key="Subtotal"/>:			$${shoppingCart.subtotal}</h3>
+		<div class="row">
+			
+			<div class="col-lg-6 col-md-6 text-center mt-2" >
+			<c:if test="${!empty errorsNotEnoughQuantity }">
+				<div><fmt:message key="Sorry"/> ${user.userName }</div>
+				<ul>
+				<c:forEach var="error" items="${errorsNotEnoughQuantity}">
+					<li>${error} <fmt:message key="NotEnoughQuantity"/></li>
+				</c:forEach>
+				</ul>
+				
+			</c:if>
+			</div>
+			
+			<div class="col-lg-6 col-md-6 text-right">
+				<c:if test="${shoppingCart.size > 0}">
+					<div class="text-right" style="margin-top: 1rem">
+						<c:url var="urlPay" value="/Pay"></c:url>
+						<a href="${urlPay}"><button type="button" class="btn btn-info" style="font-size: 16px"><fmt:message key="Pay"/></button></a>
+					</div>
+				</c:if>
+			</div>
 		</div>
-		<div class="text-right" style="margin-top: 1rem">
-			<button type="button" class="btn btn-info" style="font-size: 16px"><fmt:message key="Pay"/></button>
-		</div>
+		
 	</div>	
 	
 		

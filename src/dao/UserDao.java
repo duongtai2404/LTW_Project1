@@ -1,6 +1,13 @@
 package dao;
 
+import java.sql.Date;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 import model.ConnectToDatabase;
 import model.User;
 
@@ -23,9 +30,9 @@ public class UserDao implements ObjectDao{
 		if(find(user.getUserName()) == null){
 			//values insert to database
 			String insertValue = "'" + user.getUserName() + "','" + user.getPassword() + "','" + user.getEmailAddress()
-					+ "','" + user.getAddress() + "','" + user.getPhone() + "','" + user.getRole() + "'";
+					+ "','" + user.getAddress() + "','" + user.getPhone() + "','" + user.getRole() + "','" + user.getAvatar() + "'";
 			
-			String sql = "INSERT INTO users(name,password,emailaddress,address,phone,role) VALUES (" + insertValue +");";
+			String sql = "INSERT INTO users(name,password,emailaddress,address,phone,role,avatar) VALUES (" + insertValue +");";
 			//insert user to database
 			try {
 				connectToDataBase.excuteSQL(sql);
@@ -60,7 +67,8 @@ public class UserDao implements ObjectDao{
 				String address = resultSet.getString(5);
 				int phone = resultSet.getInt(6);
 				String role = resultSet.getString(7);
-				user = new User(userName, password, emailAddress, address, phone, role);
+				String avatar = resultSet.getString(8);
+				user = new User(userName, password, emailAddress, address, phone, role,avatar);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -92,10 +100,39 @@ public class UserDao implements ObjectDao{
 		return true;
 	}
 	
+	public boolean changeAvatarOfUser(String userName,String avatar){
+		String sql = "UPDATE users SET avatar='" + avatar + "' WHERE name='" + userName + "';";
+		try {
+			connectToDataBase.excuteSQL(sql);
+		} catch (Exception e) {
+			System.out.println("Couldn't not update avatar" + e);
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+	
+	public boolean test(){
+		String sql = "select * from date;";
+		ResultSet resultSet;
+		Date date = null;
+		
+		try {
+			resultSet = connectToDataBase.selectData(sql);
+			while(resultSet.next()){
+				date = resultSet.getDate(1);
+			}
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		System.out.println(date.toString());
+		return true;
+	}
+	
 	//test connect to database
 	public static void main(String[] args) {
-		UserDao userDao = new UserDao();
-		User user = userDao.find("Duongtai");
-		System.out.println(user.toString());
 	}
 }

@@ -79,34 +79,22 @@
 					<h5><i style="text-transform: uppercase"><fmt:message key="Description"/></i></h5>
 					<p>${computer.description}</p>
 				</div>
+				
 				<div class="color-quality">
 					<div class="color-quality-left">
 						<h5><fmt:message key="Type"/> :</h5>
 						<p  style="font-size:1.2em;color: #212121;font-weight: 600;text-transform: uppercase"><i>Laptop ${computer.type}</i></p>
 					</div>
+					
 					<div class="color-quality-right">
 						<h5><fmt:message key="Quantity"/> :</h5>
 						 <div class="quantity"> 
 							<div class="quantity-select">                           
 								<div class="entry value-minus1">&nbsp;</div>
-								<div class="entry value1"><span>1</span></div>
+								<div class="entry value1" ><span id="quantity">1</span></div>
 								<div class="entry value-plus1 active">&nbsp;</div>
 							</div>
 						</div>
-						<!--quantity-->
-								<script>
-								$('.value-plus1').on('click', function(){
-									var divUpd = $(this).parent().find('.value1'), newVal = parseInt(divUpd.text(), 10)+1;
-									divUpd.text(newVal);
-								});
-
-								$('.value-minus1').on('click', function(){
-									var divUpd = $(this).parent().find('.value1'), newVal = parseInt(divUpd.text(), 10)-1;
-									if(newVal>=1) divUpd.text(newVal);
-								});
-								</script>
-							<!--quantity-->
-
 					</div>
 					<div class="clearfix"> </div>
 				</div>
@@ -115,18 +103,54 @@
 				</div>
 				<div class="simpleCart_shelfItem">
 					<p><span>$${computer.oldPrice }</span> <i class="item_price">$${computer.newPrice}</i></p>
-					<c:url var="addProduct" value="/AddProduct"></c:url>
-					<form action="${addProduct}" method="post">
-						<input type="hidden" name="quantity" value="1"> 
+						<form name="formProduct">
+						<input type="hidden" name="quantity" value="1">
 						<input type="hidden" name="idComputer" value="${computer.idComputer }">   
-						<button type="submit" class="w3ls-cart"><fmt:message key="AddToCart"/></button>
-					</form>
-				</div> 
+						<button type="button" onclick="addProduct()" class="w3ls-cart"><fmt:message key="AddToCart"/></button>
+						</form> 
+				</div>
+				<!--quantity-->
+					<script>
+					$('.value-plus1').on('click', function(){
+						var divUpd = $(this).parent().find('.value1'), newVal = parseInt(divUpd.text(), 10)+1 ;
+						divUpd.text(newVal);
+						document.formProduct.quantity.value = newVal;
+					});
+
+					$('.value-minus1').on('click', function(){
+						var divUpd = $(this).parent().find('.value1'), newVal = parseInt(divUpd.text(), 10)-1;
+						if(newVal>=1) divUpd.text(newVal);
+						document.formProduct.quantity.value = newVal;
+					});
+					</script>
+				<!--quantity-->
+				
 			</div>
 			<div class="clearfix"> </div>
 		</div>
 	</div>
 <!-- 	End products details  -->
+
+<!-- Modal -->
+<div class="modal fade" id="addSuccess" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel"><fmt:message key="Notification" /></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body text-center">
+			<h3><fmt:message key="AddSuccess"/></h3>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- end modal -->
 	
 <!-- Add a review -->
 	<div class="additional_info">
@@ -143,12 +167,12 @@
 					</div>
 
 
-					<div class="tab-2 resp-tab-content additional_info_grid" aria-labelledby="tab_item-1">
+					<div class="tab-2 resp-tab-content additional_info_grid" aria-labelledby="tab_item-1" id="bodyAddReview">
 						<h4>(${sizeReviews}) <fmt:message key="Reviews"/></h4>
 						<c:forEach var="review" items="${reviews}">
 						<div class="additional_info_sub_grids">
 							<div class="col-xs-2 additional_info_sub_grid_left">
-								<img src="images/t2.png" alt=" " class="img-responsive" />
+								<img src="${review.avatarUser}"  style="height: 85px;width: auto;" alt=" " class="img-responsive" />
 							</div>
 							<div class="col-xs-10 additional_info_sub_grid_right">
 								<div class="additional_info_sub_grid_rightl">
@@ -175,16 +199,17 @@
 						<div class="review_grids">
 							<h5><fmt:message key="AddReview"/></h5>
 							<c:url var="url" value="/addReview"></c:url>
-							<form action="${url}" method="post">
+							<form name="formAddReview">
+								<input type="hidden" name="url" value="${url}">
 								<textarea name="review" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '<fmt:message key="AddReview"/>';}" required=""><fmt:message key="AddReview"/></textarea>
 								<label style="margin-bottom: 2rem;">Danh gia :</label>
 								<div class="rating1">
 									<span class="starRating">
-										<input id="rating5" type="radio" name="rating" value="5" checked>
+										<input id="rating5" type="radio" name="rating" value="5" >
 										<label for="rating5">5</label>
 										<input id="rating4" type="radio" name="rating" value="4">
 										<label for="rating4">4</label>
-										<input id="rating3" type="radio" name="rating" value="3" >
+										<input id="rating3" type="radio" name="rating" value="3" checked >
 										<label for="rating3">3</label>
 										<input id="rating2" type="radio" name="rating" value="2">
 										<label for="rating2">2</label>
@@ -193,7 +218,7 @@
 									</span>
 								</div>
 								<input type="hidden" value="${computer.idComputer}" name="idComputer">								
-								<input type="submit" value="Submit" >
+								<input type="button" value="<fmt:message key="Send"/>" onclick="addReview()">
 							</form>
 						</div>
 						
@@ -243,7 +268,7 @@
 									<form action="${addProduct}" method="post">
 										<input type="hidden" name="quantity" value="1"> 
 										<input type="hidden" name="idComputer" value="${computer.idComputer }">   
-										<button type="submit" class="w3ls-cart"><fmt:message key="AddToCart"/></button>
+										<button type="button" onclick="addProductWithId('${computer.idComputer}')" class="w3ls-cart"><fmt:message key="AddToCart"/></button>
 									</form>
 								</div> 
 								<c:if test="${computer.status == 'new' }">							
@@ -319,7 +344,7 @@
 								<form action="${addProduct}" method="post">
 									<input type="hidden" name="quantity" value="1"> 
 									<input type="hidden" name="idComputer" value="${computer.idComputer }">   
-									<button type="submit" class="w3ls-cart"><fmt:message key="AddToCart"/></button>
+									<button type="button" onclick="addProductWithId('${computerLenovo.idComputer}')" class="w3ls-cart"><fmt:message key="AddToCart"/></button>
 								</form>
 							</div>
 						</div>

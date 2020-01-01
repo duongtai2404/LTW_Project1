@@ -30,38 +30,25 @@ public class SignInServlet extends HttpServlet {
 
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		HttpSession session = request.getSession();
-		//Connect to database
-		UserDao userDao = new UserDao();
-		
-		String redirectUri = (String)session.getAttribute("redirectUri");
-		
-		User user;
-		
+
 		String userName = request.getParameter("Name");
 		String password = request.getParameter("Password");
-		//check userName and password are valid
+		UserDao userDao = new UserDao();
+		User user;
+		
 		if(!userDao.checkLogin(userName, password)){
-			//if userName and password are invalid -> send error 
-			String errorSignin = "WrongUserNameOrPassWord";
-			session.setAttribute("errorSignin", errorSignin);
-		}
-		else{
-			//if user is valid, create user in session
-			user = userDao.find(userName);
-			session.setAttribute("user", user);
-			//if user's role is admin, dispatcher "/index.jsp" backend's index
-			if(user.getRole().equalsIgnoreCase("admin")){
-				getServletContext().getRequestDispatcher("/WEB-INF/admin/index.jsp").forward(request, response);
-				return;
-			}
-		}
-		if(redirectUri!=null){
-			response.sendRedirect(redirectUri);
+			request.getRequestDispatcher("/ajax/SignIn.jsp").forward(request, response);
+			
 			return;
 		}
-		else{			
-			getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
+		else{
+			user = userDao.find(userName);
+			session.setAttribute("user", user);
+			String roleUser = user.getRole();
+
+			response.getWriter().print(roleUser);
 		}
 	}
 

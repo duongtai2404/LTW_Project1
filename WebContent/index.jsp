@@ -12,11 +12,6 @@
 
 	<!-- header login -->
 	<jsp:include page="header/headerLogin.jsp"></jsp:include>
-	<c:if test="${!empty showLogin}">
-		<script>
-			$('#myModal88').modal('show');
-		</script>
-	</c:if>
 	<!-- header login -->
 	
 	<!-- 	header and navigation -->
@@ -30,6 +25,11 @@
 		</div>
 	</div>
 	<!-- //banner --> 
+	<c:if test="${!empty showLogin}">
+		<script>
+		$('#myModal88').modal('show');
+		</script>
+	</c:if>
 	
 	<!-- banner-bottom -->
 	<div class="banner-bottom">								
@@ -103,7 +103,7 @@
 											<form action="${addProduct }" method="post">
 												<input type="hidden" name="quantity" value="1" /> 
 												<input type="hidden" name="idComputer" value="${computerLenovo.idComputer}" /> 
-												<button type="submit" class="w3ls-cart"><fmt:message key="AddToCart" /></button>
+												<button type="button" onclick="addProductWithId('${computerLenovo.idComputer}')" class="w3ls-cart"><fmt:message key="AddToCart" /></button>
 											</form>  
 										</div>
 									</div>					
@@ -139,7 +139,7 @@
 											<form action="${addProduct }" method="post">
 												<input type="hidden" name="quantity" value="1" /> 
 												<input type="hidden" name="idComputer" value="${computerHP.idComputer }" />  
-												<button type="submit" class="w3ls-cart"><fmt:message key="AddToCart"/></button>
+												<button type="button" onclick="addProductWithId('${computerHP.idComputer}')" class="w3ls-cart"><fmt:message key="AddToCart"/></button>
 											</form>
 										</div>
 									</div>
@@ -175,7 +175,7 @@
 											<form action="${addProduct }" method="post">
 												<input type="hidden" name="quantity" value="1" /> 
 												<input type="hidden" name="idComputer" value="${computerDell.idComputer }" />  
-												<button type="submit" class="w3ls-cart"><fmt:message key="AddToCart"/></button>
+												<button type="button" onclick="addProductWithId('${computerDell.idComputer}')" class="w3ls-cart"><fmt:message key="AddToCart"/></button>
 											</form>
 										</div>
 									</div>
@@ -211,7 +211,7 @@
 											<form action="${addProduct }" method="post">
 												<input type="hidden" name="quantity" value="1" /> 
 												<input type="hidden" name="idComputer" value="${computerAcer.idComputer }" />  
-												<button type="submit" class="w3ls-cart"><fmt:message key="AddToCart"/></button>
+												<button type="button" onclick="addProductWithId('${computerAcer.idComputer}')" class="w3ls-cart"><fmt:message key="AddToCart"/></button>
 											</form>
 										</div>
 									</div>
@@ -247,7 +247,7 @@
 											<form action="${addProduct }" method="post">
 												<input type="hidden" name="quantity" value="1" /> 
 												<input type="hidden" name="idComputer" value="${computerAsus.idComputer }" />  
-												<button type="submit" class="w3ls-cart"><fmt:message key="AddToCart"/></button>
+												<button type="button" onclick="addProductWithId('${computerAsus.idComputer}')" class="w3ls-cart"><fmt:message key="AddToCart"/></button>
 											</form>
 										</div>
 									</div>
@@ -296,7 +296,7 @@
 									<form action="${addProduct }" method="post">
 										<input type="hidden" name="quantity" value="1"> 
 										<input type="hidden" name="idComputer" value="${computerLenovo.idComputer}">   
-										<button type="submit" class="w3ls-cart"><fmt:message key="AddToCart"/></button>
+										<button type="button" onclick="addProductWithId('${computerLenovo.idComputer}')" class="w3ls-cart"><fmt:message key="AddToCart"/></button>
 									</form>
 								</div>
 							</div>
@@ -338,7 +338,7 @@
 									<form action="${addProduct }" method="post">
 										<input type="hidden" name="quantity" value="1"> 
 										<input type="hidden" name="idComputer" value="${computerHP.idComputer}">  
-										<button type="submit" class="w3ls-cart"><fmt:message key="AddToCart"/></button>
+										<button type="button" onclick="addProductWithId('${computerHP.idComputer}')" class="w3ls-cart"><fmt:message key="AddToCart"/></button>
 									</form>
 								</div>
 							</div>
@@ -380,7 +380,7 @@
 									<form action="${addProduct }" method="post">
 										<input type="hidden" name="quantity" value="1"> 
 										<input type="hidden" name="idComputer" value="${computerDell.idComputer}">  
-										<button type="submit" class="w3ls-cart"><fmt:message key="AddToCart"/></button>
+										<button type="button" onclick="addProductWithId('${computerDell.idComputer}')" class="w3ls-cart"><fmt:message key="AddToCart"/></button>
 									</form>
 								</div>
 							</div>
@@ -422,7 +422,7 @@
 									<form action="${addProduct }" method="post">
 										<input type="hidden" name="quantity" value="1"> 
 										<input type="hidden" name="idComputer" value="${computerAcer.idComputer}">   
-										<button type="submit" class="w3ls-cart"><fmt:message key="AddToCart"/></button>
+										<button type="button" onclick="addProductWithId('${computerAcer.idComputer}')" class="w3ls-cart"><fmt:message key="AddToCart"/></button>
 									</form>
 								</div>
 							</div>
@@ -464,7 +464,7 @@
 									<form action="${addProduct }" method="post">
 										<input type="hidden" name="quantity" value="1"> 
 										<input type="hidden" name="idComputer" value="${computerAsus.idComputer}">  
-										<button type="submit" class="w3ls-cart"><fmt:message key="AddToCart"/></button>
+										<button type="button" onclick="addProductWithId('${computerAsus.idComputer}')" class="w3ls-cart"><fmt:message key="AddToCart"/></button>
 									</form>
 								</div>
 							</div>
@@ -508,7 +508,7 @@
 									<form action="${addProduct }" method="post">
 										<input type="hidden" name="quantity" value="1"> 
 										<input type="hidden" name="idComputer" value="${computer.idComputer}">  
-										<button type="submit" class="w3ls-cart"><fmt:message key="AddToCart"/></button>
+										<button type="button" onclick="addProductWithId('${computer.idComputer}')" class="w3ls-cart"><fmt:message key="AddToCart"/></button>
 									</form>
 								</div>
 							</div>
@@ -641,7 +641,7 @@
 								<form action="${addProduct }" method="post">
 										<input type="hidden" name="quantity" value="1"> 
 										<input type="hidden" name="idComputer" value="${computer.idComputer}">  
-									<button type="submit" class="w3ls-cart"><fmt:message key="AddToCart"/></button>
+									<button type="button" onclick="addProductWithId('${computer.idComputer}')" class="w3ls-cart"><fmt:message key="AddToCart"/></button>
 								</form>
 							</div>
 						</div>
@@ -652,6 +652,27 @@
 		</div>
 	</div>
 	<!-- //new-products -->
+	
+	<!-- Modal -->
+<div class="modal fade" id="addSuccess" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel"><fmt:message key="Notification" /></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body text-center">
+			<h3><fmt:message key="AddSuccess"/></h3>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- end modal -->
 	
 	<!-- top-brands -->
 	<div class="top-brands">

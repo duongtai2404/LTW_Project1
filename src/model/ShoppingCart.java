@@ -1,10 +1,10 @@
 package model;
 
+import java.util.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
+
 
 public class ShoppingCart {
 	private Map<String , ShoppingCartItem> cart;
@@ -51,8 +51,8 @@ public class ShoppingCart {
 		return cart.keySet();
 	}
 	
-	public List<ShoppingCartItem> getItems(){
-		List<ShoppingCartItem> items = new ArrayList<ShoppingCartItem>();
+	public ArrayList<ShoppingCartItem> getItems(){
+		ArrayList<ShoppingCartItem> items = new ArrayList<ShoppingCartItem>();
 		ShoppingCartItem shoppingCartItem;
 		Set<String> keys = getKey();
 		for (String key : keys) {
@@ -82,7 +82,18 @@ public class ShoppingCart {
 			ShoppingCartItem item = new ShoppingCartItem(computer);
 			cart.put(key,item);
 		}
-		return false;
+		return true;
+	}
+	
+	public boolean addItemWithQuantity(String key,Computer computer,int quantity){
+		if(cart.containsKey(key)){
+			cart.get(key).increasingTheQuantityWithQuantity(quantity);
+		}
+		else{
+			ShoppingCartItem item = new ShoppingCartItem(computer, quantity);
+			cart.put(key,item);
+		}
+		return true;
 	}
 	
 	/*decrease quantity of item which cart has

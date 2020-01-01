@@ -1,7 +1,6 @@
-package servletfrontend;
+package servletajaxfrontend;
 
 import java.io.IOException;
-import java.util.Enumeration;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,22 +9,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import dao.ComputerDao;
+
 import model.Computer;
 import model.ShoppingCart;
+import dao.ComputerDao;
 
-
-@WebServlet("/AddProduct")
-public class AddProductIntoCartServlet extends HttpServlet {
+@WebServlet("/AddProductAjax")
+public class AddProductAjaxServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
 
-    public AddProductIntoCartServlet() {
+    public AddProductAjaxServlet() {
         super();
     }
 
-	
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		doPost(request, response);
 	}
 
 
@@ -33,24 +32,20 @@ public class AddProductIntoCartServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		ShoppingCart shoppingCart = (ShoppingCart)getServletContext().getAttribute("shoppingCart");
 		ComputerDao computerDao = (ComputerDao)getServletContext().getAttribute("computerDao");
-		//get showMiniCart from request
-		String showMiniCart = request.getParameter("showMiniCart");
-		//get idComputer from request
+		
 		String idComputer = request.getParameter("idComputer");
+		int quantity = Integer.parseInt(request.getParameter("quantity")); 
+		
+		
 		//find computer with idComputer
 		Computer computer = (Computer)computerDao.find(idComputer);
-		//add computer into cart
-		shoppingCart.addItem(idComputer, computer);
-		//save shopping cart into session
-		session.setAttribute("shoppingCart", shoppingCart);
 		
-		if(showMiniCart != null){
-			request.setAttribute("showMiniCart",showMiniCart);
-		}
+		shoppingCart.addItemWithQuantity(idComputer, computer, quantity);
 		
+//		session.setAttribute("shoppingCart", shoppingCart);
 		
-		String referer = request.getHeader("Referer");
-		response.sendRedirect(referer);
+		request.getRequestDispatcher("/ajax/miniCart.jsp").forward(request, response);
+		
 	}
 
 }

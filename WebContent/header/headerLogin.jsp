@@ -23,14 +23,14 @@
 									<div class="tab-1 resp-tab-content" aria-labelledby="tab_item-0">
 										<div class="facts">
 											<div class="register">
-												<form action="SignIn" method="post" >			
+												<form name="formSignIn" >	
+													<c:url var="urlSignIn" value="/SignIn"></c:url>
+													<input type="hidden" name="url" value="${urlSignIn}"> 		
 													<input name="Name" autofocus placeholder="<fmt:message key="UserName" />" type="text" required="" >						
 													<input name="Password" placeholder="<fmt:message key="Password" />" type="password" required="">										
-													<c:if test="${!empty errorSignin}">
-														<h5 style="color:red; margin-top:20px"><fmt:message key="${errorSignin }" /></h5>
-													</c:if>
+													<h5 style="color:red; margin-top:20px" id="errorSignIn"></h5>
 													<div class="sign-up">
-														<input type="submit" value="<fmt:message key="SignIn" />" />
+														<input type="button" value="<fmt:message key="SignIn" />" onclick="checkSignIn()"/>
 													</div>
 												</form>
 											</div>
@@ -43,28 +43,17 @@
 									<div class="tab-2 resp-tab-content" aria-labelledby="tab_item-1">
 										<div class="facts">
 											<div class="register">
-												<form action="SignUp" method="post">
-													<c:choose>
-														<c:when test="${!empty errorSignup }">
-															<input autofocus placeholder="${wrongUser.userName }"  name="Name" type="text" required="">
-															<input placeholder="${wrongUser.emailAddress }" name="Email" type="email" required="">
-															<input placeholder="${wrongUser.address }" name="Address" type="text" >	
-															<input placeholder="${wrongUser.phone }" name="Phone" type="number" >	
-														</c:when>
-														<c:otherwise>
-															<input autofocus placeholder=<fmt:message key="UserName" />  name="Name" type="text" required="">
-															<input placeholder="<fmt:message key="EmailAddress" />" name="Email" type="email" required="">
-															<input placeholder="<fmt:message key="Address" />" name="Address" type="text" >	
-															<input placeholder="<fmt:message key="Phone" />" name="Phone" type="number" >
-														</c:otherwise>
-													</c:choose>		
-													<input placeholder="<fmt:message key="Password" />" name="Password" type="password" required="">	
-													<input placeholder="<fmt:message key="ConfirmPassword" />" name="ConfirmPassword" type="password" required="">
-													<c:if test="${!empty errorSignup}">
-														<h5 style="color:red; margin-top:20px"><fmt:message key="${errorSignup }" /></h5>												
-													</c:if>
+												<form name="formSignUp" id="formSignUp">
+<!-- 													<div id="inputSignUp" > -->
+														<input autofocus placeholder=<fmt:message key="UserName" />  name="Name" type="text" required="">
+														<input placeholder="<fmt:message key="EmailAddress" />" name="Email" type="email" required="">
+														<input placeholder="<fmt:message key="Address" />" name="Address" type="text" >	
+														<input placeholder="<fmt:message key="Phone" />" name="Phone" type="number" >
+														<input placeholder="<fmt:message key="Password" />" name="Password" type="password" required="">	
+														<input placeholder="<fmt:message key="ConfirmPassword" />" name="ConfirmPassword" type="password" required="">												
+<!-- 													</div> -->
 													<div class="sign-up">
-														<input type="submit" value="<fmt:message key="CreateAccount" />" />
+														<input type="button" onclick="SignUp()" value="<fmt:message key="CreateAccount" />" />
 													</div>
 												</form>
 											</div>

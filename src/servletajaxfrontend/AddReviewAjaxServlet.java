@@ -1,4 +1,4 @@
-package servletfrontend;
+package servletajaxfrontend;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -17,28 +17,15 @@ import model.Review;
 import model.User;
 
 @WebServlet("/addReview")
-public class AddReviewServlet extends HttpServlet {
+public class AddReviewAjaxServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public AddReviewServlet() {
+    public AddReviewAjaxServlet() {
         super();
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession();
-		ReviewDao reviewDao = new ReviewDao();
-		
-		User loginedUser = (User)session.getAttribute("user");
-		String nameUser = loginedUser.getUserName();
-		
-		String review = (String)request.getParameter("review");
-		String idComputer = request.getParameter("idComputer");
-		int rate = 5;
-		
-		Review reviewUser = new Review(nameUser, idComputer, review, rate);
-		reviewDao.add(reviewUser);
-				
-		response.sendRedirect(request.getRequestURI());
+		doPost(request, response);
 	}
 
 
@@ -47,6 +34,10 @@ public class AddReviewServlet extends HttpServlet {
 		ReviewDao reviewDao = new ReviewDao();
 		
 		User loginedUser = (User)session.getAttribute("user");
+		if(loginedUser == null){
+			response.getWriter().write("nouser");
+			return;
+		}
 		String nameUser = loginedUser.getUserName();
 		//get review from user
 		String review = request.getParameter("review");
@@ -54,11 +45,11 @@ public class AddReviewServlet extends HttpServlet {
 		String idComputer = request.getParameter("idComputer");
 		int rate = 5;
 		
-		Review reviewUser = new Review(nameUser, idComputer, review, rate);
+		Review reviewUser = new Review(nameUser, idComputer, review, rate,"");
 		reviewDao.add(reviewUser);
 		
 		//Redirect old page
-		ComputerDao computerDao = (ComputerDao)session.getAttribute("computerDao");
+		ComputerDao computerDao = (ComputerDao)getServletContext().getAttribute("computerDao");
 		Computer computer = (Computer)computerDao.find(idComputer);
 		ArrayList<Review> reviews = (ArrayList<Review>)reviewDao.find(idComputer);
 		
@@ -66,7 +57,7 @@ public class AddReviewServlet extends HttpServlet {
 		request.setAttribute("reviews", reviews);
 		request.setAttribute("sizeReviews", reviews.size());
 		
-		getServletContext().getRequestDispatcher("/single.jsp").forward(request, response);
+		getServletContext().getRequestDispatcher("/ajax/addReview.jsp").forward(request, response);
 	}
 
 }
